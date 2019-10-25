@@ -1,11 +1,3 @@
-# React Express Starter Pack
-
-> Create full stack apps with React and Express. Run your client and server with a single command. 
-
-### Redux Version
-This version does not include Redux
-[Click Here For Redux Version](https://github.com/bradtraversy/react_redux_express_starter) 
-
 ## Quick Start
 
 ``` bash
@@ -25,6 +17,13 @@ npm run server
 npm run client
 
 # Server runs on http://localhost:5000 and client on http://localhost:3000
+```
+
+## DBS Connection
+For some reason the MySQL wont support password protocol by default so we will have to modify the user previledges. Run the following query.
+```sql
+CREATE USER 'dev'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+FLUSH PRIVILEGES;
 ```
 
 ## App Info
