@@ -1,6 +1,8 @@
 .sidebar-container {
     min-height: 100vh;
     background-color: rosybrown;
+    top: 0;
+    left: 0;
 }
 
 .sidebar {

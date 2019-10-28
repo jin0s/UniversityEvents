@@ -5,23 +5,28 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import SidebarContent from '../components/sidebar/SidebarContent';
 import Content from '../components/contents/Content';
+import HeaderComponent from '../components/header/HeaderComponent'
 
 export default props => {
 
-    const [showSidebar,setShowSidebar] = useState(false);
+    // const [showSidebar,setShowSidebar] = useState(false);
 
-    const toggleSidebar = () => setShowSidebar(!showSidebar);
+    // const toggleSidebar = () => setShowSidebar(!showSidebar);
  
     return (
         <div className="AppHome">
-            
-                <div className="sidebar-icon">
+                <HeaderComponent />
+                {/* <div className="sidebar-icon">
                     <span onClick={toggleSidebar}>
                         {showSidebar ? <CloseIcon /> : <MenuIcon/>}
                     </span>
-                </div>
-                <SidebarContent showSidebar={showSidebar} />
-                <Content />
+                </div> */}
+                <main style={{marginTop: '64px'}}>
+                    <Content />
+                </main>
+                {/* <SidebarContent showSidebar={showSidebar} /> */}
+                    
+               
           
         </div>
     );
