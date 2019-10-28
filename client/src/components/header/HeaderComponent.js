@@ -9,51 +9,30 @@ const HeaderComponent = (props) => {
     const [showSidebar,setShowSidebar] = useState(false);
 
     const toggleSidebar = () => setShowSidebar(!showSidebar);
+
+    const userLevel = "Admin";
  
     return (
         <div>
-            {showSidebar ?
-                <div>
-                    <header className="header">
-                        <nav className="header_nav">
-                            {/* <div className="header_button"><a>THE LOGO</a></div> */}
-                            <div className="sidebar-icon">
-                                <span onClick={toggleSidebar}>
-                                    {showSidebar ? <CloseIcon /> : <MenuIcon/>}
-                                </span>
-                            </div>
-                            <div className="spacer"></div>
-                            <div lassName="header_nav_items">
-                                <ul>
-                                    <li><a href="/">Log Out</a></li>
-                                </ul>
-                            </div>
-                        </nav> 
-                    </header>
-                    <div>
-                        <SidebarContent showSidebar={showSidebar} />
+            <header className="header">
+                <nav className="header_nav">
+                    <div className="sidebar-icon">
+                        <span onClick={toggleSidebar}>
+                            {showSidebar ? <CloseIcon style={{color: '#DFE7F2'}} /> : <MenuIcon style={{color: '#DFE7F2'}} />}
+                        </span>
                     </div>
-                </div>
-                :  
-                <header className="header">
-                    <nav className="header_nav">
-                        {/* <div className="header_button"><a>THE LOGO</a></div> */}
-                        <div className="sidebar-icon">
-                            <span onClick={toggleSidebar}>
-                                {showSidebar ? <CloseIcon /> : <MenuIcon/>}
-                            </span>
-                        </div>
-                        <SidebarContent showSidebar={showSidebar} />
-                        <div className="spacer"></div>
-                        <div lassName="header_nav_items">
-                            <ul>
-                                <li><a href="/">Log Out</a></li>
-                            </ul>
-                        </div>
-                    </nav> 
-            
-                </header>
-            }
+                    <div className="spacer"></div>
+                    <div lassName="header_nav_items">
+                        <ul>
+                            <li>{userLevel}</li>
+                            <li><a href="/">Log Out</a></li>
+                        </ul>
+                    </div>
+                </nav> 
+            </header>
+            <div>
+                <SidebarContent showSidebar={showSidebar} userLevel={userLevel}/>
+            </div>
         </div>
     );
 }

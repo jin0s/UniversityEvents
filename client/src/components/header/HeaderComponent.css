@@ -5,13 +5,14 @@ body {
 }
 
 .header {
-    background: skyblue;
+    background: #043F70;
     position: fixed;
     z-index: 2;
     top: 0;
     left: 0;
     width: 100%;
     height: 56px;
+    color: DFE7F2;
 }
 
 .header_nav {
@@ -33,18 +34,18 @@ body {
 }
 
 .header_button a {
-    color: white;
+    color: DFE7F2;
     text-decoration: none;
     font-style: 1.5rem;
 }
 
 .header_nav_items a {
-    color: white;
+    color: #DFE7F2;
     text-decoration: none;
 }
 
 .header_nav_items a:hover {
-    color: orange;
+    color: #DFE7F2;
 }
 
 .spacer {
