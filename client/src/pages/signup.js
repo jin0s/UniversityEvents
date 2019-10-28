@@ -1,6 +1,6 @@
 
 import React, { useContext, useState } from 'react';
-import '../styles/signup.css';
+import './signup.css';
 // import {signUp} from '../utils/apiCalls';
 import HomeButton from '../components/buttons/homeButton';
 // import PlaceHolder from '../components/header/profilePicPlaceholder.png';

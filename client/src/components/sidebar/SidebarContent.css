@@ -1,0 +1,32 @@
+.sidebar-container {
+    min-height: 100vh;
+    background-color: rosybrown;
+}
+
+.sidebar {
+    width: 200px;
+    padding-top: 25px;
+}
+
+.sidebar ul{
+    height: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.sidebar a{
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+.sidebar li{
+   margin: 0.5rem 0;
+}
+
+.sidebar li:hover {
+    border-right: 5px solid dimgray;
+    background-color: gai;
+}
+
