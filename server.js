@@ -49,6 +49,8 @@ app.get('/api/users', async (req, res) => {
 });
 
 app.post('/api/login', async (req, res) => {
+  console.log("username: " + req.body.username)
+  console.log("inputPassword: " + req.body.inputPassword)
   /*********  Queury Paramenters *********/
   try {
     var conn = pool.promise();
@@ -62,12 +64,13 @@ app.post('/api/login', async (req, res) => {
           id = ? ";
     var [results] =  await conn.query(query_str, values);
     console.log(results[0].password);
-
-    res.json({status: checkPassword(req.body.inputPassword, results[0].password)})
+    return res.json({
+      status: checkPassword(req.body.inputPassword, results[0].password)
+    })
   } 
   catch (e) {
     console.error(e);
-    res.json({status: 'ERRORED'});
+    return res.json({status: 'ERRORED'});
   }
 });
 /***************************** END OF ROUTING ********************************/

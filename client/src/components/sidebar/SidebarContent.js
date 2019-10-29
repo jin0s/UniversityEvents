@@ -6,7 +6,7 @@ const SidebarContent = (props) => {
   const userLevel = props.userLevel;
   let content;
 
-  if (userLevel == "Super Admin") {
+  if (userLevel === "Super Admin") {
     content = <div className="sidebar" id="superAdmin_sidebar">
       <ul>
           {/* Super admins can create profiles for a university*/}
@@ -15,14 +15,14 @@ const SidebarContent = (props) => {
         <li><a>MANAGE EVENTS</a></li>
       </ul>
   </div>
-  } else if (userLevel == "Admin") {
+  } else if (userLevel === "Admin") {
     content = <div className="sidebar" id="admin_sidebar">
       <ul>
         {/* Admin  can  create  events */}
         <li><a>CREATE AN EVENT</a></li>
       </ul>
     </div>
-  } else if (userLevel == "Student") {
+  } else if (userLevel === "Student") {
     content =  <div className="sidebar" id="student_sidebar">
       <ul>
         {/* Students can view events */}
