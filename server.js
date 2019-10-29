@@ -29,7 +29,7 @@ app.get('/api/customers', (req, res) => {
     {id: 3, firstName: 'Mary', lastName: 'Swanson'},
   ];
 
-  res.json(customers);
+  return res.json(customers);
 });
 
 app.get('/api/users', async (req, res) => {
@@ -37,18 +37,20 @@ app.get('/api/users', async (req, res) => {
     try {
       var conn = pool.promise();
       var query_str =
-        "SELECT * FROM UniversityEvents.Users";
+        "SELECT name FROM UniversityEvents.Users";
       var [results] =  await conn.query(query_str);
       console.log(results);
-      res.json(results);
+      return res.json(results);
     } 
     catch (e) {
       console.error(e);
-      res.json({status: 'ERRORED'});
+      return res.json({status: 'ERRORED'});
     }
 });
 
 app.post('/api/login', async (req, res) => {
+  console.log("username: " + req.body.username)
+  console.log("inputPassword: " + req.body.inputPassword)
   /*********  Queury Paramenters *********/
   try {
     var conn = pool.promise();
@@ -61,12 +63,14 @@ app.post('/api/login', async (req, res) => {
         WHERE \
           id = ? ";
     var [results] =  await conn.query(query_str, values);
-
-    res.json({status: checkPassword(req.body.inputPassword, results[0].password)})
+    console.log(results[0].password);
+    return res.json({
+      status: checkPassword(req.body.inputPassword, results[0].password)
+    })
   } 
   catch (e) {
     console.error(e);
-    res.json({status: 'ERRORED'});
+    return res.json({status: 'ERRORED'});
   }
 });
 
@@ -78,11 +82,11 @@ app.post('/api/signup', async (req, res) => {
     var query_str = 
       " INSERT INTO UniversityEvents.Users VALUES (?, ?, ?)";
     var [results] =  await conn.query(query_str, values);
-    res.json({status: 0})
+    return res.json({status: 0})
   } 
   catch (e) {
     console.error(e);
-    res.json({status: 'ERRORED'});
+    return res.json({status: 'ERRORED'});
   }
 });
 
@@ -93,10 +97,10 @@ app.get('/api/events', async (req, res) => {
       var query_str =
         "SELECT * FROM UniversityEvents.Events";
       var [results] =  await conn.query(query_str);
-      res.json(results);
+      return res.json(results);
     } 
     catch (e) {
-      res.json({status: 'ERRORED'});
+      return res.json({status: 'ERRORED'});
     }
 });
 
@@ -123,11 +127,11 @@ app.post('/api/events', async (req, res) => {
         VALUES \
            (?,?,?,?,?,?)";
     var [results] =  await conn.query(query_str, values);
-    res.json({status: 0})
+    return res.json({status: 0})
   } 
   catch (e) {
     console.error(e);
-    res.json({status: 'ERRORED'});
+    return res.json({status: 'ERRORED'});
   }
 });
 

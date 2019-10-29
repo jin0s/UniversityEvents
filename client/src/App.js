@@ -5,29 +5,48 @@ import HomeButton from './components/buttons/homeButton';
 // import Customers from './components/customers';
 
 class App extends Component {
-  render() {
-    const loginHandler = async() =>{
-      // let data = await login(username,password);
-      // console.log("Result" , data);
-      // if(data.error === ""){
-      //     console.log("Login was successful");
-      //     localStorage.setItem('token', data.token);
-      //     localStorage.setItem('username', this.state.username);
-      //     localStorage.setItem('usernameFriend', '');
-      //     this.props.history.push("/home");
-      // }
-      // else{
-      //     alert(data.error);
-      // } 
-      this.props.history.push("/home");     
+  constructor(props){
+    super(props);
+    this.state = {
+      username: '',
+      inputPassword:'',
     }
+  }
+
+  handleInputChange = (event) => {
+    const { value, name } = event.target;
+    this.setState({
+      [name]: value
+    });
+  }
+
+  onClick = (event) => {
+    console.log(JSON.stringify(this.state))
+    event.preventDefault();
+    fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify(this.state),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(({status}) => {
+      if (status === 0) {
+        console.log("Login was successful");
+        this.props.history.push("/home");     
+      } else {
+        alert('Invalid Username or Password');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error logging in please try again');
+    });
+  }
+
+  render() {
     return (
-      // <div className="App">
-      //   <header className="App-header">
-      //     <img src={logo} className="App-logo" alt="logo" />
-      //     <h1 className="App-title">React Express Starter</h1>
-      //   </header>
-      // </div>
       <div className="App">
         <header id="sign_in_header" className="App-header">
           <div className="container-left">
@@ -40,15 +59,27 @@ class App extends Component {
             <div id="loginDiv">
               <div id="username_login">
                 Username:
-                {/* <input className='username' placeholder="Username" value={username} onChange= { e => this.setState({...this.state, username: e.target.value})}/> */}
-                <input className='usename' placeholder="Username"/>
+                <input 
+                  className='username'
+                  name="username" 
+                  placeholder="Username" 
+                  value={this.state.username} 
+                  onChange={this.handleInputChange} 
+                  required
+                />
               </div>
               <div id="password_login">
                 Password: 
-                {/* <input className='password' placeholder="Password" type='password' value={password} onChange= { e => this.setState({...this.state, password: e.target.value})}/> */}
-                <input className='password' placeholder="Password" type='password'/>
+                <input 
+                  className='password'
+                  name="inputPassword" 
+                  type='password' 
+                  value={this.state.password} 
+                  onChange={this.handleInputChange} 
+                  required
+                />
               </div>
-              <button className='login' onClick={()=>loginHandler()}> LOGIN </button>
+              <button className='login' onClick={this.onClick}> LOGIN </button>
               <HomeButton className='signup' path='/signup' {...this.props}>SIGN UP</HomeButton>
             </div>
           </div>
