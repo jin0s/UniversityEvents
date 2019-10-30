@@ -22,7 +22,7 @@ const HeaderComponent = (props) => {
                         </span>
                     </div>
                     <div className="spacer"></div>
-                    <div lassName="header_nav_items">
+                    <div className="header_nav_items">
                         <ul>
                             <li>{userLevel}</li>
                             <li><a href="/">Log Out</a></li>

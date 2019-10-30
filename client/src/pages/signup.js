@@ -32,11 +32,11 @@ export default props => {
         setConfPassword(confPassword);
     }
 
-    const nameHandler = username=>{
+    const nameHandler = name=>{
         setName(name);
     }
 
-    const signUpHandler = async(event) => {
+    const signUpHandler = async() => {
         if(password !== confPassword){ //If passwords don't match then dont make the api call
             alert("Your passwords don't match, please try again.");
         }
@@ -66,7 +66,7 @@ export default props => {
         <div id="signUp">
             <h1> SignUp </h1> 
             <div id="name_signUp">
-                Display Name: 
+                Name: 
                 <input onBlur= { e => nameHandler(e.target.value)}/>
             </div>
             <div id="username_signUp">
