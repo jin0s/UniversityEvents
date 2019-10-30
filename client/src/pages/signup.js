@@ -20,31 +20,7 @@ export default props => {
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
     const [confPassword,setConfPassword] = useState('');
-    const [display_name,setDisplay_name] = useState('');
-    // const [profile_pic_url,setProfile_pic_url] = useState('');
-    
-    // const tileData = [
-    //     {
-    //         img: GuildSword,
-    //         title: 'Guild Sword',
-    //     },
-    //     {
-    //         img: BowArrow,
-    //         title: 'Bow Arrow',
-    //     },
-    //     {
-    //         img: Staff,
-    //         title: 'Staff',
-    //     },
-    //     {
-    //         img: Shield,
-    //         title: 'Shield',
-    //     },
-    //     {
-    //         img: Sword,
-    //         title: 'Sword',
-    //     }
-    // ];
+    const [name,setName] = useState('');
 
     const usernameHandler = username=>{
         setUsername(username);
@@ -55,70 +31,43 @@ export default props => {
     const confPasswordHandler = confPassword=>{
         setConfPassword(confPassword);
     }
-    const display_nameHandler = display_name=>{
-        setDisplay_name(display_name);
+
+    const nameHandler = username=>{
+        setName(name);
     }
-    // const profile_pic_urlHandler = profile_pic_url=>{
-    //     setProfile_pic_url(profile_pic_url);
-    //     console.log("pic: "+profile_pic_url);
-    //     console.log('src', profile_pic_url);
-    // }
-    const signUpHandler = async() =>{
-        // if(password !== confPassword){ //If passwords don't match then dont make the api call
-        //     alert("Your passwords don't match, please try again.");
-        // }
-        // else{
-        //     let data = await signUp(username,password,display_name,profile_pic_url);
-        //     console.log("Result" , data);
-        //     if(data.error === ""){
-        //         //TODO
-        //         console.log("Sign up was successful");
-        //         props.history.push("/");
-        //     }
-        //     else{
-        //         alert(data.error);
-        //     }
-        // }
-        props.history.push("/");
+
+    const signUpHandler = async(event) => {
+        if(password !== confPassword){ //If passwords don't match then dont make the api call
+            alert("Your passwords don't match, please try again.");
+        }
+        console.log(JSON.stringify({username: username, password: password, name: name}))
+        fetch('/api/signup', {
+          method: 'POST',
+          body: JSON.stringify({username: username, password: password, name: name}),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => response.json())
+        .then(({status}) => {
+          if (status === 0) {
+            console.log("Sign up was successful");
+            props.history.push("/");  
+          } 
+        })
+        .catch(err => {
+          console.error(err);
+          alert('Error Signing up please try again');
+        });
     }
-//    const charSelectHandler = event=>{
-//        const charId = event.target.value;
-//        setSelectCharacter(charId);
-//    }
-    //console.log(username,password);
+
     return (
     <div className="AppSignUp">
         <div id="signUp">
             <h1> SignUp </h1> 
-            {/* <SamplePage2 />  */}
-            {/* <div id="profile_pic">
-                <Popup trigger={
-                    <Badge badgeContent={<AddIcon />} color="secondary" >
-                        <Grid container justify="center" alignItems="center">
-                            <img src={profile_pic_url || PlaceHolder} style={{  height: '130px', width : '140px' }} />
-                        </Grid>
-                    </Badge>
-                    } position="bottom center" modal > 
-                    {cancel => (
-                        <div id="cancel">
-                            <GridList cellHeight={200}>
-                                <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-                                    <ListSubheader component="div">Choose Profile Picture <Button id="closeButtonn" close onClick={cancel}/> </ListSubheader>
-                                </GridListTile>
-                                {tileData.map(tile => (
-                                        <GridListTile key={tile.img} style={{width:'200px', height:'200px', margin:'1px'}} cols={1} onClick={cancel}>
-                                            <img src={tile.img} alt={tile.title} style={{  width: '100%', height: 'auto', margin:'1px' }} onClick={()=>{ cancel(); profile_pic_urlHandler(tile.img) }}/>
-                                            <GridListTileBar title={tile.title} style={{ width: '100%', height: 'auto' }} onClick={cancel}/>
-                                        </GridListTile>
-                                ))}
-                            </GridList>
-                        </div>
-                    )}
-                </Popup>
-            </div> */}
-            <div id="display_name_signUp">
+            <div id="name_signUp">
                 Display Name: 
-                <input onBlur= { e => display_nameHandler(e.target.value)}/>
+                <input onBlur= { e => nameHandler(e.target.value)}/>
             </div>
             <div id="username_signUp">
                 Username:
@@ -132,8 +81,8 @@ export default props => {
                 Retype Password: 
                 <input type='password' onBlur= { e => confPasswordHandler(e.target.value)}/>
             </div>
-            <button className="signup" onClick={()=>signUpHandler()}> SIGN UP </button>
-            <HomeButton className='signup' path='/' {...props}>BACK</HomeButton>
+            <button className="signUp" onClick={()=>signUpHandler()}> SIGN UP </button>
+            <HomeButton className='signUp' path='/' {...props}>BACK</HomeButton>
         </div>
     </div>
     )

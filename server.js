@@ -2,9 +2,9 @@ const mysql = require("mysql2");
 const express = require('express');
 var app = express();
 const env = require('dotenv');
-checkPassword = require("./api/login.js").checkPassword;
-require("./api/event.js");
+const helpers = require("./helper.js");
 
+checkPassword = helpers.checkPassword;
 // Load the environment
 app.use(express.json())
 const result = env.config();
@@ -29,7 +29,7 @@ app.get('/api/customers', (req, res) => {
     {id: 3, firstName: 'Mary', lastName: 'Swanson'},
   ];
 
-  return res.json(customers);
+  res.json(customers);
 });
 
 app.get('/api/users', async (req, res) => {
@@ -37,14 +37,14 @@ app.get('/api/users', async (req, res) => {
     try {
       var conn = pool.promise();
       var query_str =
-        "SELECT name FROM UniversityEvents.Users";
+        "SELECT * FROM UniversityEvents.Users";
       var [results] =  await conn.query(query_str);
       console.log(results);
-      return res.json(results);
+      res.json(results);
     } 
     catch (e) {
       console.error(e);
-      return res.json({status: 'ERRORED'});
+      res.json({status: 'ERRORED'});
     }
 });
 
@@ -54,7 +54,7 @@ app.post('/api/login', async (req, res) => {
   /*********  Queury Paramenters *********/
   try {
     var conn = pool.promise();
-    const values = [req.body.username];
+    const values = [req.body.username] 
     var query_str = 
       " SELECT \
           password, name \
@@ -104,28 +104,13 @@ app.get('/api/events', async (req, res) => {
     }
 });
 
-// Create Events
-app.post('/api/events', async (req, res) => {
+// assign super admins
+app.post('/api/assign_super_admins', async (req, res) => {
   try {
     var conn = pool.promise();
-    const values = [
-           req.body.event_type_id
-          ,req.body.name 
-          ,req.body.datetime 
-          ,req.body.description 
-          ,req.body.contact_phone 
-          ,req.body.contact_email 
-        ];
+    const values = [req.body.user_id] 
     var query_str = 
-      " INSERT INTO UniversityEvents.Events (\
-           event_type_id \
-          ,name \
-          ,datetime \
-          ,description \
-          ,contact_phone \
-          ,contact_email ) \
-        VALUES \
-           (?,?,?,?,?,?)";
+      "INSERT INTO UniversityEvents.SuperAdmin VALUES (?)";
     var [results] =  await conn.query(query_str, values);
     return res.json({status: 0})
   } 
@@ -135,7 +120,70 @@ app.post('/api/events', async (req, res) => {
   }
 });
 
+// create admins
+app.post('/api/create_admins', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const values = [req.body.user_id, req.body.university_id] 
+    var query_str = 
+      "INSERT INTO UniversityEvents.Admins VALUES (?, ?)";
+    var [results] =  await conn.query(query_str, values);
+    return res.json({status: 0})
+  } 
+  catch (e) {
+    console.error(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+// create universities
+app.post('/api/create_universities', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const values = [req.body.id, req.body.super_user_id, req.body.name, 
+      req.body.pictures, req.body.location_address, req.body.num_of_students];
+    var query_str = 
+      "INSERT INTO UniversityEvents.Universities VALUES (?, ?, ?, ?, ?, ?)";
+    var [results] =  await conn.query(query_str, values);
+    return res.json({status: 0})
+  } 
+  catch (e) {
+    console.error(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+// create RSO
+app.post('/api/create_rso', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const values = [req.body.id, req.body.user_id, req.body.chapter_id, req.body.name];
+    var query_str = 
+      "INSERT INTO UniversityEvents.RSOs VALUES (?, ?, ?, ?)";
+    var [results] =  await conn.query(query_str, values);
+    return res.json({status: 0})
+  } 
+  catch (e) {
+    console.error(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+// Get List of RSOs
+app.get('/api/get_all_rsos', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    var query_str =
+      "SELECT * FROM UniversityEvents.RSOs";
+    var [results] =  await conn.query(query_str);
+    return res.json(results);
+  } 
+  catch (e) {
+    return res.json({status: 'ERRORED'});
+  }
+});
 /***************************** END OF ROUTING ********************************/
+
 
 // Start the server
 const port = 5000;

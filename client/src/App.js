@@ -20,7 +20,7 @@ class App extends Component {
     });
   }
 
-  onClick = (event) => {
+  loginHandler = async(event) => {
     console.log(JSON.stringify(this.state))
     event.preventDefault();
     fetch('/api/login', {
@@ -79,7 +79,7 @@ class App extends Component {
                   required
                 />
               </div>
-              <button className='login' onClick={this.onClick}> LOGIN </button>
+              <button className='login' onClick={this.loginHandler}> LOGIN </button>
               <HomeButton className='signup' path='/signup' {...this.props}>SIGN UP</HomeButton>
             </div>
           </div>
