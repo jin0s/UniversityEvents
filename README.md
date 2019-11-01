@@ -52,6 +52,7 @@ FLUSH PRIVILEGES;
     1. [ Create Admins ](#CreateAdmins)
 7. [ Super Admins ](#SuperAdmins)
     1. [ Assign Super Admins ](#AssignSuperAdmins)
+    2. [ Get SuperAdmin ById ](#GetSuperAdminById)
 
 <a name="Signup"></a>
 ### Signup
@@ -327,6 +328,32 @@ On Success:
   ```
   {
     "status": "0"
+  }
+  ```
+Otherwise:
+ ```
+  {
+    "status": "ERRORED"
+  }
+ ```
+ 
+ 
+<a name="GetSuperAdminById"></a>
+#### Get Super Admin By Id
+**/api/getSuperAdminById**
+*Expects*
+  ```
+  {
+    "user_id": "userid1",
+  }
+  ```
+*Returns*
+
+On Success: 
+
+  ```
+  {
+    "user_id": "userid1"
   }
   ```
 Otherwise:
