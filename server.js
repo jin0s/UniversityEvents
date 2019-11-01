@@ -91,15 +91,39 @@ app.post('/api/signup', async (req, res) => {
 });
 
 // Get User Events
-app.get('/api/events', async (req, res) => {
+app.post('/api/events/', async (req, res) => {
     try {
       var conn = pool.promise();
-      var query_str =
-        "SELECT * FROM UniversityEvents.Events";
-      var [results] =  await conn.query(query_str);
-      return res.json(results);
+      const accesstoken = req.body.accesstoken;
+      const values = [req.body.username];
+      var query_str;
+      switch(req.body.event_type){
+        case "rso":
+          query_str = "CALL UniversityEvents.getuserrsoevents(?)"
+          break;
+        case "private":
+          query_str = "call UniversityEvents.getuserprivateevents(?)"
+          break;
+        case "public":
+          query_str = "SELECT * FROM UniversityEvents.getallpublicevents"
+          break;
+        default:
+          return res.json({
+            "username" : req.body.username,
+            "event_type" : req.body.event_type,
+            "results" : "No results"
+          })
+      }
+      
+      var [results] =  await conn.query(query_str, values);
+      return res.json({
+        "username" : req.body.username,
+        "event_type" : req.body.event_type,
+        "results" : results
+      });
     } 
     catch (e) {
+      console.log(e);
       return res.json({status: 'ERRORED'});
     }
 });
