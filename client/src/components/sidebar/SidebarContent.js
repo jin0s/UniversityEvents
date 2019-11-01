@@ -1,10 +1,25 @@
-import React, { Component } from 'react'
+import React, { useState, useContext } from 'react'
 import './SidebarContent.css';
+import CreateEventContent from '../contents/CreateEventContent';
+import { UsersContext } from '../../context';
 
-const SidebarContent = (props) => {
+const SidebarContent = () => {
 
-  const userLevel = props.userLevel;
+  let userLevel = '';
+
+  const superAdmin = localStorage.getItem('super_admin_id');
+
+  if (superAdmin !== null) {
+      userLevel = "Super Admin";
+  } else {
+      userLevel = "Student"
+  }
+  
+  const [showCreatEventForm, setShowCreatEventForm] = useState(false);
+  const toggleCreatEventForm = () => setShowCreatEventForm(!showCreatEventForm);
+  const { showSidebar } = useContext(UsersContext);
   let content;
+  let main;
 
   if (userLevel === "Super Admin") {
     content = <div className="sidebar" id="superAdmin_sidebar">
@@ -19,7 +34,7 @@ const SidebarContent = (props) => {
     content = <div className="sidebar" id="admin_sidebar">
       <ul>
         {/* Admin  can  create  events */}
-        <li><a>CREATE AN EVENT</a></li>
+        <li onClick={()=>toggleCreatEventForm()}>CREATE AN EVENT</li>
       </ul>
     </div>
   } else if (userLevel === "Student") {
@@ -35,13 +50,20 @@ const SidebarContent = (props) => {
     </div>
   }
 
+  if (showCreatEventForm === true) {
+    main = <CreateEventContent showCreatEventForm={showCreatEventForm} />
+  }
+
   return (
      <div className="sidebar-container" >
-          {props.showSidebar ? 
+          {showSidebar ? 
           <div className="sidebar">
               {content}
           </div> 
           : <div></div>}
+          <main style={{marginTop: '64px'}}>
+              {main}
+          </main>
       </div>
   );
 }

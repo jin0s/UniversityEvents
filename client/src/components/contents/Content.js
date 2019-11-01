@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { placeholderContent } from './placeholderContent'
+import CreateUniversityContent from './CreateUniversityContent'
 import './Content.css'
 
-export default class Content extends Component {
-  render() {
-    return <div
-      className="content-container"
-      dangerouslySetInnerHTML={{__html: placeholderContent}}
-    />
-  }
+const Content = (props) => {
+    return (
+        <div className='content-container'>
+            <CreateUniversityContent />
+        </div>
+    );
 }
+
+export default Content;

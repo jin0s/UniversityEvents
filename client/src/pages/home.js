@@ -1,16 +1,26 @@
 
 import React, {useState} from 'react';
+import { UsersContextProvider } from "../context";
 import './home.css';
 import Content from '../components/contents/Content';
 import HeaderComponent from '../components/header/HeaderComponent'
+import SidebarContent from '../components/sidebar/SidebarContent'
 
-export default props => {
+const home = (props) => {
+
+    const showSidebar = false;
+
     return (
         <div className="AppHome">
-                <HeaderComponent />
+            <UsersContextProvider showSidebar={showSidebar} >
+                <HeaderComponent  history={props.history}/>
+                <SidebarContent />
                 <main style={{marginTop: '64px'}}>
                     <Content />
                 </main>
+            </UsersContextProvider>
         </div>
     );
 }
+
+export default home;

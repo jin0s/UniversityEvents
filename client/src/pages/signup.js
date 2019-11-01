@@ -1,22 +1,11 @@
 
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import './signup.css';
-// import {signUp} from '../utils/apiCalls';
 import HomeButton from '../components/buttons/homeButton';
-// import PlaceHolder from '../components/header/profilePicPlaceholder.png';
-// import IconButton from '@material-ui/core/IconButton';
-// import Badge from '@material-ui/core/Badge';
-// import AddIcon from '@material-ui/icons/Add';
-// import { Card, CardBody, CardTitle, Button } from 'reactstrap';
-// import Popup from "reactjs-popup";
-// import GridList from '@material-ui/core/GridList';
-// import GridListTile from '@material-ui/core/GridListTile';
-// import GridListTileBar from '@material-ui/core/GridListTileBar';
-// import ListSubheader from '@material-ui/core/ListSubheader';
+import {signUp} from '../utils/apiCalls'
 
 export default props => {
-    // const {message} = useContext(FBContext); 
-    console.log('props: ', props); 
+    const [selectedUserLevel, setSelectedUserLevel] = useState('');
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
     const [confPassword,setConfPassword] = useState('');
@@ -31,40 +20,63 @@ export default props => {
     const confPasswordHandler = confPassword=>{
         setConfPassword(confPassword);
     }
-
     const nameHandler = name=>{
         setName(name);
+    }
+    const selectedUserLevelHandler = selectedUserLevel=>{
+        setSelectedUserLevel(selectedUserLevel);
     }
 
     const signUpHandler = async() => {
         if(password !== confPassword){ //If passwords don't match then dont make the api call
             alert("Your passwords don't match, please try again.");
+        } else {
+
         }
-        console.log(JSON.stringify({username: username, password: password, name: name}))
-        fetch('/api/signup', {
-          method: 'POST',
-          body: JSON.stringify({username: username, password: password, name: name}),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(response => response.json())
-        .then(({status}) => {
-          if (status === 0) {
+        let data = await signUp(username,password,name);
+        console.log(data);
+        if(data.status === 0){
             console.log("Sign up was successful");
-            props.history.push("/");  
-          } 
-        })
-        .catch(err => {
-          console.error(err);
-          alert('Error Signing up please try again');
-        });
+            props.history.push("/");
+        }
+        else{
+            alert(data.error);
+        }
     }
 
     return (
     <div className="AppSignUp">
         <div id="signUp">
             <h1> SignUp </h1> 
+            <div className="userLevel">
+                User Role
+                <ul>
+                    <li>
+                        <label>
+                            <input
+                            type="radio"
+                            value="student"
+                            checked={selectedUserLevel === 'student'}
+                            onChange={ e => selectedUserLevelHandler(e.target.value)}
+                            className="form-check-input"
+                            />
+                            Student
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input
+                            type="radio"
+                            value="super_admin"
+                            checked={selectedUserLevel === 'super_admin'}
+                            onChange={ e => selectedUserLevelHandler(e.target.value)}
+                            className="form-check-input"
+                            />
+                            Super Admin
+                        </label>
+                    </li>
+                </ul>
+            </div>
             <div id="name_signUp">
                 Name: 
                 <input onBlur= { e => nameHandler(e.target.value)}/>

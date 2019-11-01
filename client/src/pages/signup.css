@@ -23,7 +23,7 @@ img{
 	margin-top: 2.5%;
 }
 
-#display_name_signUp input{
+#name_signUp input{
 	margin-left: 2.5%;
 	margin-top: 2.3%
 }
@@ -41,4 +41,28 @@ img{
 #confirm_password_signUp input{
 	margin-top: 2.5%;
 	margin-left: 1.2%;
+}
+
+.userLevel ul {
+	list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.userLevel li {
+    padding: 0 0.5rem;
+}
+
+.userLevel input {
+	float: left;
+	clear: none;
+	margin: 6px 10px 0 2px;
+}
+
+.userLevel label {
+	float: left;
+	clear: none;
+	display: block;
+	padding: 2px 1em 0 0;
 }

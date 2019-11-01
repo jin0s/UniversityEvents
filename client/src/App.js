@@ -3,6 +3,7 @@ import logo from './imgs/Purple-Abstract.jpg';
 import './App.css';
 import HomeButton from './components/buttons/homeButton';
 // import Customers from './components/customers';
+import { login, getSuperAdminById } from './utils/apiCalls';
 
 class App extends Component {
   constructor(props){
@@ -23,26 +24,21 @@ class App extends Component {
   loginHandler = async(event) => {
     console.log(JSON.stringify(this.state))
     event.preventDefault();
-    fetch('/api/login', {
-      method: 'POST',
-      body: JSON.stringify(this.state),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => response.json())
-    .then(({status}) => {
-      if (status === 0) {
-        console.log("Login was successful");
-        this.props.history.push("/home");     
-      } else {
-        alert('Invalid Username or Password');
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      alert('Error logging in please try again');
-    });
+    const {username,inputPassword} = this.state;
+    let data = await login(username,inputPassword);
+    console.log(data);
+    if (data.status === 0) {
+      console.log("Login was successful");
+      localStorage.setItem('username', this.state.username);
+      localStorage.setItem('user_id', this.state.username);
+      let getSuperAdminData = await getSuperAdminById(username);
+      console.log(getSuperAdminData)
+      if (getSuperAdminData.length !== 0) {
+        console.log("getSuperAdminId was successful");
+        localStorage.setItem('super_admin_id', this.state.username);
+      } 
+      this.props.history.push("/home");
+    }
   }
 
   render() {
@@ -73,6 +69,7 @@ class App extends Component {
                 <input 
                   className='password'
                   name="inputPassword" 
+                  placeholder="Password" 
                   type='password' 
                   value={this.state.password} 
                   onChange={this.handleInputChange} 
