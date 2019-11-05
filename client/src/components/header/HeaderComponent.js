@@ -19,8 +19,6 @@ const HeaderComponent = (props) => {
         userLevel = "Student"
     }
 
-    console.log(superAdmin)
-
     const handleLogout = async() =>{
         localStorage.clear();
         props.history.push("/");

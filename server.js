@@ -3,6 +3,32 @@ const express = require('express');
 var app = express();
 const env = require('dotenv');
 const helpers = require("./helper.js");
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, './uploads/');
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(null, false)
+  }
+};
+
+const upload = multer({
+  storage: storage, 
+  limits: {
+    fileSize: 1024 * 1024 * 5 
+  },
+  fileFilter: fileFilter
+});
 
 checkPassword = helpers.checkPassword;
 // Load the environment
@@ -63,7 +89,6 @@ app.post('/api/login', async (req, res) => {
         WHERE \
           id = ? ";
     var [results] =  await conn.query(query_str, values);
-    console.log(results[0].password);
     return res.json({
       status: checkPassword(req.body.inputPassword, results[0].password)
     })
@@ -144,6 +169,23 @@ app.post('/api/assign_super_admins', async (req, res) => {
   }
 });
 
+app.post('/api/getSuperAdminById', async (req, res) => {
+  /*********  Queury Paramenters *********/
+  try {
+    var conn = pool.promise();
+    const values = [req.body.user_id] 
+    var query_str =
+      "SELECT * FROM UniversityEvents.SuperAdmin WHERE user_id=?";
+    var [results] =  await conn.query(query_str, values);
+    console.log(results);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.error(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
 // create admins
 app.post('/api/create_admins', async (req, res) => {
   try {
@@ -161,13 +203,14 @@ app.post('/api/create_admins', async (req, res) => {
 });
 
 // create universities
-app.post('/api/create_universities', async (req, res) => {
+app.post('/api/create_universities', upload.single('pictures'), async (req, res) => {
   try {
     var conn = pool.promise();
-    const values = [req.body.id, req.body.super_user_id, req.body.name, 
-      req.body.pictures, req.body.location_address, req.body.num_of_students];
+    console.log("req.pictures: " + req.pictures)
+    const values = [req.body.super_user_id, req.body.name, 
+      req.file.path, req.body.location_address, req.body.num_of_students];
     var query_str = 
-      "INSERT INTO UniversityEvents.Universities VALUES (?, ?, ?, ?, ?, ?)";
+      "INSERT INTO UniversityEvents.Universities (super_user_id, name, pictures, location_address, num_of_students) VALUES (?, ?, ?, ?, ?)";
     var [results] =  await conn.query(query_str, values);
     return res.json({status: 0})
   } 

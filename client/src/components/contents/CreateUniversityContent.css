@@ -1,10 +1,20 @@
-.createUniversityContainer form {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
+.createUniversityContainer {
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 1000px;
+    height: 600px;  
 }
 
-.createUniversityContainer label {
-    padding: 0 0.5rem;
+.input{
+	margin-left: 2.5%;
+	margin-top: 2.3%
+}
+
+.submit{
+	border-radius: 20px;
+	margin-left: 2.5%;
+	margin-top: 2.3%
 }

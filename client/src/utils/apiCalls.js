@@ -40,6 +40,26 @@ export const signUp = async (username,password,name) => {
     } 
 }
 
+export const assign_super_admins = async (user_id) => { 
+    try{
+        let response = await fetch('/api/assign_super_admins', {
+            method: 'POST',
+            body: JSON.stringify({user_id: user_id}),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function(text) {
+            console.log("Assign super admins response", text);
+            return text ? JSON.parse(text) : {}
+        })
+        //return data;        
+    }
+    catch(e){
+        console.log(e);
+    } 
+}
+
 export const getSuperAdminById = async (user_id) => { 
     try{
         let response = await fetch('/api/getSuperAdminById', {
@@ -54,6 +74,21 @@ export const getSuperAdminById = async (user_id) => {
             return text ? JSON.parse(text) : {}
         })
         //return data;        
+    }
+    catch(e){
+        console.log(e);
+    } 
+}
+
+export const createUniversities = async (formData) => { 
+    try{
+        let response = await fetch('/api/create_universities', {
+            method: 'POST',
+            body: formData
+        })
+        return response.text().then(function(text) {
+            return text ? JSON.parse(text) : {}
+        })   
     }
     catch(e){
         console.log(e);

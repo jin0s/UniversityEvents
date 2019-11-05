@@ -9,14 +9,15 @@ import SidebarContent from '../components/sidebar/SidebarContent'
 const home = (props) => {
 
     const showSidebar = false;
+    const buttonClicked = '';
 
     return (
         <div className="AppHome">
             <UsersContextProvider showSidebar={showSidebar} >
                 <HeaderComponent  history={props.history}/>
-                <SidebarContent />
+                <SidebarContent buttonClicked={buttonClicked}/>
                 <main style={{marginTop: '64px'}}>
-                    <Content />
+                    <Content buttonClicked={buttonClicked}/>
                 </main>
             </UsersContextProvider>
         </div>

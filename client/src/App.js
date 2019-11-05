@@ -22,17 +22,14 @@ class App extends Component {
   }
 
   loginHandler = async(event) => {
-    console.log(JSON.stringify(this.state))
     event.preventDefault();
     const {username,inputPassword} = this.state;
     let data = await login(username,inputPassword);
-    console.log(data);
     if (data.status === 0) {
       console.log("Login was successful");
       localStorage.setItem('username', this.state.username);
       localStorage.setItem('user_id', this.state.username);
       let getSuperAdminData = await getSuperAdminById(username);
-      console.log(getSuperAdminData)
       if (getSuperAdminData.length !== 0) {
         console.log("getSuperAdminId was successful");
         localStorage.setItem('super_admin_id', this.state.username);

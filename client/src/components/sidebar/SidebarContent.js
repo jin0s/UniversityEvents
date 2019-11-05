@@ -5,6 +5,12 @@ import { UsersContext } from '../../context';
 
 const SidebarContent = () => {
 
+  const usersContext = useContext(UsersContext);
+
+  const { buttonClicked, setButtonClicked} = usersContext;
+  const { showSidebar } = useContext(UsersContext);
+
+  let content;
   let userLevel = '';
 
   const superAdmin = localStorage.getItem('super_admin_id');
@@ -14,44 +20,34 @@ const SidebarContent = () => {
   } else {
       userLevel = "Student"
   }
-  
-  const [showCreatEventForm, setShowCreatEventForm] = useState(false);
-  const toggleCreatEventForm = () => setShowCreatEventForm(!showCreatEventForm);
-  const { showSidebar } = useContext(UsersContext);
-  let content;
-  let main;
 
   if (userLevel === "Super Admin") {
     content = <div className="sidebar" id="superAdmin_sidebar">
       <ul>
           {/* Super admins can create profiles for a university*/}
-        <li><a>CREATE AN UNIVERSITY PROFILE</a></li>
+        <li onClick={ e => setButtonClicked('universityProfile')}><span>CREATE AN UNIVERSITY PROFILE</span></li>
         {/* Events created without an RSO need to be approved by a super admin */}
-        <li><a>MANAGE EVENTS</a></li>
+        <li onClick={ e => setButtonClicked('manageEvents')}><span>MANAGE EVENTS</span></li>
       </ul>
   </div>
   } else if (userLevel === "Admin") {
     content = <div className="sidebar" id="admin_sidebar">
       <ul>
         {/* Admin  can  create  events */}
-        <li onClick={()=>toggleCreatEventForm()}>CREATE AN EVENT</li>
+        <li onClick={ e => setButtonClicked('createEvent')}><span>CREATE AN EVENT</span></li>
       </ul>
     </div>
   } else if (userLevel === "Student") {
     content =  <div className="sidebar" id="student_sidebar">
       <ul>
         {/* Students can view events */}
-        <li><a>DISCOVER EVENTS</a></li>
+        <li onClick={ e => setButtonClicked('discoverEvents')}><span>DISCOVER EVENTS</span></li>
         {/* Students can join an existing RSO */}
-        <li><a>JOIN AN RSO</a></li>
+        <li onClick={ e => setButtonClicked('joinRSO')}><span>JOIN AN RSO</span></li>
         {/* A student  user  can  request  to  create a  new  RSO  */}
-        <li><a>START AN RSO</a></li>
+        <li onClick={ e => setButtonClicked('startRSO')}><span>START AN RSO</span></li>
       </ul>
     </div>
-  }
-
-  if (showCreatEventForm === true) {
-    main = <CreateEventContent showCreatEventForm={showCreatEventForm} />
   }
 
   return (
@@ -61,9 +57,6 @@ const SidebarContent = () => {
               {content}
           </div> 
           : <div></div>}
-          <main style={{marginTop: '64px'}}>
-              {main}
-          </main>
       </div>
   );
 }

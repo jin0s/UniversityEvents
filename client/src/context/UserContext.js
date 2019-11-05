@@ -8,19 +8,23 @@ export const Provider = props => {
     const {
         showSidebar: initialShowSidebar,
         userLevel: initialUserLevel,
+        buttonClicked: initialButtonClicked,
         children
     } = props;
   
     // Use State to keep the values
     const [showSidebar, setShowSidebar] = useState(initialShowSidebar);
     const [userLevel, setUserLevel] = useState(initialUserLevel);
+    const [buttonClicked, setButtonClicked] = useState(initialButtonClicked);
   
     // Make the context object:
     const usersContext = {
         showSidebar,
         setShowSidebar,
         userLevel,
-        setUserLevel
+        setUserLevel,
+        buttonClicked,
+        setButtonClicked
     };
   
     // pass the value in provider and return
@@ -32,10 +36,12 @@ export const Provider = props => {
   Provider.propTypes = {
     showSidebar: PropTypes.bool,
     userLevel: PropTypes.object,
+    buttonClicked: PropTypes.string
   };
   
   Provider.defaultProps = {
     showSidebar: false,
-    userLevel: {}
+    userLevel: {},
+    buttonClicked: ''
   };
   
