@@ -65,7 +65,6 @@ app.get('/api/users', async (req, res) => {
       var query_str =
         "SELECT * FROM UniversityEvents.Users";
       var [results] =  await conn.query(query_str);
-      console.log(results);
       res.json(results);
     } 
     catch (e) {
@@ -75,8 +74,6 @@ app.get('/api/users', async (req, res) => {
 });
 
 app.post('/api/login', async (req, res) => {
-  console.log("username: " + req.body.username)
-  console.log("inputPassword: " + req.body.inputPassword)
   /*********  Queury Paramenters *********/
   try {
     var conn = pool.promise();
@@ -224,11 +221,16 @@ app.post('/api/create_universities', upload.single('pictures'), async (req, res)
 app.post('/api/create_rso', async (req, res) => {
   try {
     var conn = pool.promise();
-    const values = [req.body.id, req.body.user_id, req.body.chapter_id, req.body.name];
+    const values = [req.body.admin_id
+                    ,req.body.user_id1
+                    ,req.body.user_id2
+                    ,req.body.user_id3
+                    ,req.body.user_id4
+                    ,req.body.name];
     var query_str = 
-      "INSERT INTO UniversityEvents.RSOs VALUES (?, ?, ?, ?)";
+      "SELECT UniversityEvents.createrso(?, ?, ?, ?, ?, ?) AS status";
     var [results] =  await conn.query(query_str, values);
-    return res.json({status: 0})
+    return res.json(results)
   } 
   catch (e) {
     console.error(e);
@@ -246,6 +248,7 @@ app.get('/api/get_all_rsos', async (req, res) => {
     return res.json(results);
   } 
   catch (e) {
+    console.log(e);
     return res.json({status: 'ERRORED'});
   }
 });

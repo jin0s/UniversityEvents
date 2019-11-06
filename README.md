@@ -225,10 +225,12 @@ On Error:
 *Expects*
   ```
   {
-    "id": "12345",
-    "user_id" : "userid1",
-    "chapter_id": "example",
-    "name" : "example"
+    "admin_id" : "userid1",
+    "user_id1" : "userid2",
+    "user_id2" : "userid3",
+    "user_id3" : "userid4",
+    "user_id4" : "userid5",
+    "name" : "RSONameClubYea"
   }
   ```
 *Returns*
@@ -240,7 +242,13 @@ On Success:
     "status": "0"
   }
   ```
-Otherwise:
+On failed to create because the atleast one of the students are not registered on the Users table. This does not tell you which of the inputs are wrong so make sure the username of the student is spelled correctly:
+ ```
+  {
+    "status": "1"
+  }
+ ```
+On Error:
  ```
   {
     "status": "ERRORED"
