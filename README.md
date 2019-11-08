@@ -44,8 +44,9 @@ FLUSH PRIVILEGES;
     3. [ Modify Event ](#ModifyEvent)
 4. [ RSO ](#RSO)
     1. [ Get List of RSOs ](#GetAllRSOs)
-    2. [ Join RSO ](#JoinRSO)
-    3. [ Create RSO ](#CreateRSO)
+    2. [ Get RSOs by Id](#GetRSOsByID)
+    3. [ Join RSO ](#JoinRSO)
+    4. [ Create RSO ](#CreateRSO)
 5. [ Universities ](#Universities)
     1. [ Create Universitiess ](#CreateUniversities)
 6. [ Admins ](#Admins)
@@ -113,17 +114,22 @@ Otherwise:
 
 <a name="CreateEvents"></a>
 #### Create Events
-**/api/**
+**/api/create_events**
 
 *Expects*
+If the event is private or public, you do not need to pass it an RSO ID.
+If the event is an RSO event you will need to pass it an RSO ID
   ```
   {
-    "event_type_id": "1",
+    "event_category": "1",
     "name" : "antisocial social event",
     "datetime" : "2019-10-29 12:00:00",
     "description" : "Anti Social Social Club (sometimes stylized as ASSC and AntiSocialSocialClub) is a streetwear brand founded by Neek Lurk,[1][2] who previously worked for Stussy as a social marketing manager..[3][4]The brand has collaborated with A Bathing Ape,[5] Dover Street Market,[6], Playboy,[7][8] and Hello Kitty.[9]",
     "contact_phone": "4075555050",
-    "contact_email": "test@knights.ucf.edu" 
+    "contact_email": "test@knights.ucf.edu" ,
+    "admin_id" : "admin@knights.ucf.edu",
+    "rso_id" : "1",
+    "event_type" : "public/private/rso"
   }
   ```
 *Returns*
@@ -214,6 +220,22 @@ On Error:
 <a name="GetAllRSOs"></a>
 #### Get List of RSOs
 **/api/**
+
+<a name="GetRSOsByID"></a>
+#### Get RSO By ID
+**/api/rsos/?id=x**
+
+*Expects*
+```
+METHOD GET:
+/api/rsos/?id=6
+
+you can set id to any valid id values
+```
+*Returns*
+```
+[{"id":6,"user_id":"c.le93@knights.ucf.edu","name":"testautocreateadmin","status":1}]
+```
 
 <a name="JoinRSO"></a>
 #### Join RSO

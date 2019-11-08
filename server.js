@@ -150,6 +150,43 @@ app.post('/api/events/', async (req, res) => {
     }
 });
 
+// create events
+app.post('/api/create_event', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const values = [req.body.event_category,
+                    req.body.name,
+                    req.body.datetime,
+                    req.body.description,
+                    req.body.contact_phone,
+                    req.body.contact_email ]
+    const rso_id = req.body.rso_id;
+    const admin_id = req.body.admin_id;
+    switch(req.body.event_type){
+      case "rso":
+        values.push(rso_id)
+        query_str = "CALL UniversityEvents.creatersoevent(?, ?, ?, ?, ?, ?, ?)"
+        break;
+      case "private":
+        values.push(admin_id);
+        query_str = "CALL UniversityEvents.createprivateevent(?, ?, ?, ?, ?, ?, ?)"
+        break;
+      case "public":
+        values.push(admin_id);
+        query_str = "CALL UniversityEvents.createpublicevent(?, ?, ?, ?, ?, ?, ?)"
+        break;
+      default:
+        return res.json({status: 'ERRORED'})
+    }
+    var [results] =  await conn.query(query_str, values);
+    return res.json({status: 0})
+  } 
+  catch (e) {
+    console.error(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
 // assign super admins
 app.post('/api/assign_super_admins', async (req, res) => {
   try {
@@ -246,6 +283,24 @@ app.get('/api/get_all_rsos', async (req, res) => {
     var query_str =
       "SELECT * FROM UniversityEvents.RSOs";
     var [results] =  await conn.query(query_str);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+app.get('/api/rsos', async (req, res) => {
+  console.log("api/rsos/ called");
+  try {
+    var conn = pool.promise();
+    const id = req.query.id;
+    console.log("query passed id=" + id);
+    var query_str =
+      "SELECT * FROM UniversityEvents.RSOs \
+       WHERE id = ?";
+    var [results] =  await conn.query(query_str, id);
     return res.json(results);
   } 
   catch (e) {
