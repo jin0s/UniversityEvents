@@ -231,11 +231,12 @@ On Error:
     "user_id3" : "userid4",
     "user_id4" : "userid5",
     "name" : "RSONameClubYea"
+    "admin_university_id" : "(int) 1"
   }
   ```
 *Returns*
 
-On Success: 
+On Success: The API will auto assign the user to an admin role of the RSO on creation
 
   ```
   {
@@ -246,6 +247,12 @@ On failed to create because the atleast one of the students are not registered o
  ```
   {
     "status": "1"
+  }
+ ```
+ On failed to create because the admin is already associated with another university and is trying to create a new RSO under another university
+ ```
+  {
+    "status": "2"
   }
  ```
 On Error:

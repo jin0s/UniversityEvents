@@ -226,9 +226,10 @@ app.post('/api/create_rso', async (req, res) => {
                     ,req.body.user_id2
                     ,req.body.user_id3
                     ,req.body.user_id4
-                    ,req.body.name];
+                    ,req.body.name
+                    ,req.body.admin_university_id];
     var query_str = 
-      "SELECT UniversityEvents.createrso(?, ?, ?, ?, ?, ?) AS status";
+      "SELECT UniversityEvents.createrso(?, ?, ?, ?, ?, ?, ?) AS status";
     var [results] =  await conn.query(query_str, values);
     return res.json(results)
   } 
