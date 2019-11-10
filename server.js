@@ -48,16 +48,6 @@ const pool = mysql.createPool({
 
 
 /********************************** ROUTING **********************************/
-app.get('/api/customers', (req, res) => {
-  const customers = [
-    {id: 1, firstName: 'John', lastName: 'Doe'},
-    {id: 2, firstName: 'Brad', lastName: 'Traversy'},
-    {id: 3, firstName: 'Mary', lastName: 'Swanson'},
-  ];
-
-  res.json(customers);
-});
-
 app.get('/api/users', async (req, res) => {
     /*********  Queury Paramenters *********/
     try {
@@ -150,6 +140,44 @@ app.post('/api/events/', async (req, res) => {
     }
 });
 
+// get public events by uni id
+app.get('/api/events', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    var id = req.query.uni;
+    var event_id = req.query.id;
+    var query_str =
+        "CALL geteventsbyuniversity(?)";
+    if(event_id != null) {
+      query_str = "SELECT * FROM UniversityEvents.Events WHERE id = ?"
+      id = event_id;
+    }
+    var [results] =  await conn.query(query_str, id);
+    console.log(results);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+// get list of event categories
+app.get('/api/events_categories', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    var query_str = "SELECT * FROM UniversityEvents.EventsTypes";
+    var [results] =  await conn.query(query_str);
+    console.log(results);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+  
+});
+
 // create events
 app.post('/api/create_event', async (req, res) => {
   try {
@@ -236,6 +264,24 @@ app.post('/api/create_admins', async (req, res) => {
   }
 });
 
+// change admins
+app.post('/api/change_admins', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const values = [req.body.user_id, req.body.admin_id] 
+    var query_str = 
+      " UPDATE UniversityEvents.Admins \
+        SET user_id = ? \
+        WHERE user_id = ? ";
+    var [results] =  await conn.query(query_str, values);
+    return res.json({status: 0})
+  } 
+  catch (e) {
+    console.error(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
 // create universities
 app.post('/api/create_universities', upload.single('pictures'), async (req, res) => {
   try {
@@ -291,12 +337,28 @@ app.get('/api/get_all_rsos', async (req, res) => {
   }
 });
 
+// Get User Avaiable RSOs To Join
+app.get('/api/user_rso', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    var id = req.query.user_id;
+    var query_str =
+        "CALL getusersavailablerso(?)";
+    var [results] =  await conn.query(query_str, id);
+    console.log(results);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+// Get RSO by ID
 app.get('/api/rsos', async (req, res) => {
-  console.log("api/rsos/ called");
   try {
     var conn = pool.promise();
     const id = req.query.id;
-    console.log("query passed id=" + id);
     var query_str =
       "SELECT * FROM UniversityEvents.RSOs \
        WHERE id = ?";
@@ -308,6 +370,45 @@ app.get('/api/rsos', async (req, res) => {
     return res.json({status: 'ERRORED'});
   }
 });
+
+// Join RSO
+app.post('/api/join_rso', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const values = [req.body.user_id, 
+                    req.body.rso_id];
+    var query_str = 
+      "INSERT INTO Member (user_id, RSO_id) VALUES (?, ?)";
+    var [results] =  await conn.query(query_str, values);
+    return res.json({status: 0})
+  } 
+  catch (e) {
+    console.error(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+// Create a comment
+app.post('/api/comment', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const values = [req.body.user_id, 
+                    req.body.event_id,
+                    req.body.description,
+                    req.body.rating]; 
+    var query_str = 
+      "INSERT INTO Comments (user_id, event_id, description, rating) VALUES (?, ?, ?, ?)";
+    var [results] =  await conn.query(query_str, values);
+    return res.json({status: 0})
+  } 
+  catch (e) {
+    console.error(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+
+
 /***************************** END OF ROUTING ********************************/
 
 
