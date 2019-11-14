@@ -1,0 +1,24 @@
+.inputs ul {
+    list-style: none;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.inputs li {
+    padding: 0 0.5rem;
+}
+
+.inputs input {
+	float: right;
+	clear: none;
+	margin: 6px 10px 0 15px;
+}
+
+.inputs label {
+	float: left;
+	clear: none;
+	display: block;
+	padding: 2px 1em 0 0;
+}

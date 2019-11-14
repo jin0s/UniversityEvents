@@ -66,7 +66,3 @@ const CreateUniversityContent = (props) => {
 }
 
 export default CreateUniversityContent;
-
-
-// const values = [req.body.id, req.body.super_user_id, req.body.name, 
-//     req.body.pictures, req.body.location_address, req.body.num_of_students];

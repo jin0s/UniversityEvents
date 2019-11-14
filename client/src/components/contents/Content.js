@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
-import CreateUniversityContent from './CreateUniversityContent'
-import './Content.css'
+import CreateUniversityContent from './CreateUniversityContent';
+import CreateRSO from './CreateRSO';
+import './Content.css';
 import { UsersContext } from '../../context';
 
 const Content = (props) => {
@@ -8,16 +9,15 @@ const Content = (props) => {
     const { buttonClicked } = useContext(UsersContext);
 
     console.log(buttonClicked);
-    const contentHandler = buttonClicked => {
-        if (buttonClicked === 'universityProfile') {
-            <CreateUniversityContent />
-        }
-    
-    }
    
     return (
         <div className='content-container'>
-            <CreateUniversityContent />
+            {buttonClicked === 'universityProfile' ? 
+                <CreateUniversityContent /> 
+                : buttonClicked === 'startRSO' ?
+                <CreateRSO />
+                : <div></div>
+                }
         </div>
     );
 }

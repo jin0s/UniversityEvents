@@ -52,7 +52,7 @@ export default props => {
     <div className="AppSignUp">
         <div id="signUp">
             <h1> SignUp </h1> 
-            <div className="xc">
+            <div className="userLevel">
                 User Role
                 <ul>
                     <li>
