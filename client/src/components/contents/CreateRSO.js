@@ -33,26 +33,26 @@ const CreateRSO = (props) => {
 
     // ** Needs to verify each memeber's eligibility in the system
 
-    const createRSOHandler = async() => {
-        let admin_data = create_admins(user_id, university_id);
-        if (admin_data.status === 0) {
-            let data = await create_rso(username,password,name);
-        }
+    // const createRSOHandler = async() => {
+    //     let admin_data = create_admins(user_id, university_id);
+    //     if (admin_data.status === 0) {
+    //         let data = await create_rso(username,password,name);
+    //     }
        
-        if (selectedUserLevel === 'super_admin') {
-            let super_admin_data = await assign_super_admins(username);
-            if (super_admin_data.status !== 0) {
-                alert(data.error);
-            }
-        }
-        if(data.status === 0){
-            console.log("Sign up was successful");
-            props.history.push("/");
-        }
-        else{
-            alert(data.error);
-        }
-    }
+    //     if (selectedUserLevel === 'super_admin') {
+    //         let super_admin_data = await assign_super_admins(username);
+    //         if (super_admin_data.status !== 0) {
+    //             alert(data.error);
+    //         }
+    //     }
+    //     if(data.status === 0){
+    //         console.log("Sign up was successful");
+    //         props.history.push("/");
+    //     }
+    //     else{
+    //         alert(data.error);
+    //     }
+    // }
     
     return (
         <div className="createUniversityContainer">
