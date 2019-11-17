@@ -13,6 +13,9 @@ const CreateRSO = (props) => {
     const [admin, setAdmin] = useState('');
     const[listOpen, setListOpen] = useState(false);
 
+    const university_id = localStorage.getItem('university_id');
+    console.log('university_id: ' + university_id);
+
     const selectedMembersHandler = id =>{
         checkUserExists(id);
         setselectedMembers([
@@ -126,12 +129,12 @@ const CreateRSO = (props) => {
                                 {
                                     listOpen
                                     ? (
-                                    <ul>
-                                        {listItems} 
-                                    </ul>
+                                        <ul>
+                                            {listItems} 
+                                        </ul>
                                     ):
                                     (
-                                    null
+                                        null
                                     )
                                 }
                             </div> 

@@ -66,3 +66,8 @@ img{
 	display: block;
 	padding: 2px 1em 0 0;
 }
+
+.userLevel {
+	display: flex;
+	flex-direction: row;
+}

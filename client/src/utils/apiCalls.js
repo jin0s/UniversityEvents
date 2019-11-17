@@ -169,3 +169,40 @@ export const getUniversityIdByUserId = async (id) => {
         console.log(e);
     } 
 }
+
+export const getUniversityIdByName = async (name) => { 
+    try{
+        let response = await fetch(`/api/getUniversityIdByName/?name=${name}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function(text) {
+            return text ? JSON.parse(text) : {}
+        })   
+    }
+    catch(e){
+        console.log(e);
+    } 
+}
+
+export const studentOf = async (user_id, university_id) => {
+    try{
+        let response = await fetch('/api/studentOf', {
+            method: 'POST',
+            body: JSON.stringify({user_id: user_id, university_id: university_id}),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function(text) {
+            console.log("StudentOf response", text);
+            return text ? JSON.parse(text) : {}
+        })
+        //return data;        
+    }
+    catch(e){
+        console.log(e);
+    } 
+}
