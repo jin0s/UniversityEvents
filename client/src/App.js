@@ -3,7 +3,7 @@ import logo from './imgs/Purple-Abstract.jpg';
 import './App.css';
 import HomeButton from './components/buttons/homeButton';
 // import Customers from './components/customers';
-import { login, getSuperAdminById } from './utils/apiCalls';
+import { login, getSuperAdminById, getAdminById } from './utils/apiCalls';
 
 class App extends Component {
   constructor(props){
@@ -21,6 +21,8 @@ class App extends Component {
     });
   }
 
+  // TODO: Refactor using props instead of localstorage for the boogieman
+  // Refactor by assigning role instead of using multiple variables
   loginHandler = async(event) => {
     event.preventDefault();
     const {username,inputPassword} = this.state;
@@ -30,10 +32,14 @@ class App extends Component {
       localStorage.setItem('username', this.state.username);
       localStorage.setItem('user_id', this.state.username);
       let getSuperAdminData = await getSuperAdminById(username);
+      let getAdminData = await getAdminById(username);
       if (getSuperAdminData.length !== 0) {
         console.log("getSuperAdminId was successful");
         localStorage.setItem('super_admin_id', this.state.username);
-      } 
+      } else if (getAdminData.length !== 0) {
+        console.log("We have an adminstrator")
+        localStorage.setItem('admin', this.state.username);
+      }
       this.props.history.push("/home");
     }
   }

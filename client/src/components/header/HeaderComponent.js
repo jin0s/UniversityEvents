@@ -12,11 +12,14 @@ const HeaderComponent = (props) => {
     let userLevel = '';
 
     const superAdmin = localStorage.getItem('super_admin_id');
+    const admin = localStorage.getItem('admin');
 
     if (superAdmin !== null) {
         userLevel = "Super Admin";
-    } else {
-        userLevel = "Student"
+    } else if (admin !== null ) {
+        userLevel = "Admin";
+    }else {
+        userLevel = "Student";
     }
 
     const handleLogout = async() =>{

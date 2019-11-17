@@ -150,7 +150,7 @@ Otherwise:
 
 #### Create Events
 
-**/api/create_events**
+**/api/create_event**
 
 _Expects_
 If the event is private or public, you do not need to pass it an RSO ID.

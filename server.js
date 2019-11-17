@@ -4,6 +4,9 @@ var app = express();
 const env = require('dotenv');
 const helpers = require("./helper.js");
 const multer = require('multer');
+// const bodyParser = require('body-parser');
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -211,7 +214,7 @@ app.post('/api/create_event', async (req, res) => {
   } 
   catch (e) {
     console.error(e);
-    return res.json({status: 'ERRORED'});
+    return res.json({status: 'ERRORED', info: e});
   }
 });
 
@@ -238,6 +241,23 @@ app.post('/api/getSuperAdminById', async (req, res) => {
     const values = [req.body.user_id] 
     var query_str =
       "SELECT * FROM UniversityEvents.SuperAdmin WHERE user_id=?";
+    var [results] =  await conn.query(query_str, values);
+    console.log(results);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.error(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+app.post('/api/getAdminById', async (req, res) => {
+  /*********  Queury Paramenters *********/
+  try {
+    var conn = pool.promise();
+    const values = [req.body.user_id] 
+    var query_str =
+      "SELECT * FROM UniversityEvents.Admins WHERE user_id=?";
     var [results] =  await conn.query(query_str, values);
     console.log(results);
     return res.json(results);

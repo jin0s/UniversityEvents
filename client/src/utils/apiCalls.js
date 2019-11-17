@@ -101,6 +101,25 @@ export const create_rso = async (admin_id,user_id1,user_id2,user_id3,user_id4,na
     } 
 }
 
+export const getAdminById = async (user_id) => { 
+    try{
+        let response = await fetch('/api/getAdminById', {
+            method: 'POST',
+            body: JSON.stringify({user_id: user_id}),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function(text) {
+            console.log("getSuperAdminById response",text);
+            return text ? JSON.parse(text) : {}
+        })      
+    }
+    catch(e){
+        console.log(e);
+    } 
+}
+
 export const getSuperAdminById = async (user_id) => { 
     try{
         let response = await fetch('/api/getSuperAdminById', {
@@ -135,3 +154,56 @@ export const createUniversities = async (formData) => {
         console.log(e);
     } 
 }
+    
+export const createEvents = async (formData) => { 
+    try{
+        const response = await fetch('/api/create_event', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+        const body = await response.text();
+        return body;
+    }
+    catch(e){
+        console.log(e);
+    } 
+}
+
+export const getEventByID = async (event_id) => { 
+    try{
+        const response = await fetch('/api/events?id=' + event_id);
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        return body;
+    } catch(e){
+        console.log(e);
+    } 
+}
+
+// Catch empty JSON object
+export const getAllEventsByType = async (username, event_type) => { 
+    try{
+        const postBody = {
+            "username": username,
+            "event_type": event_type
+          }
+
+        const response = await fetch('/api/events', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postBody)
+        })
+        const body = await response.json();
+        console.log("in apiCalls: " + body.results);
+        return body;
+    }
+    catch(e){
+        console.log(e);
+    } 
+}
+

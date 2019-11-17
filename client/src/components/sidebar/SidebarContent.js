@@ -13,10 +13,14 @@ const SidebarContent = () => {
   let content;
   let userLevel = '';
 
+// TODO: Refactor this to use props instead of localstorage
   const superAdmin = localStorage.getItem('super_admin_id');
+  const admin = localStorage.getItem('admin');
 
   if (superAdmin !== null) {
       userLevel = "Super Admin";
+  } else if (admin !== null ) { 
+      userLevel = "Admin";
   } else {
       userLevel = "Student"
   }
