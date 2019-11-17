@@ -135,3 +135,37 @@ export const createUniversities = async (formData) => {
         console.log(e);
     } 
 }
+
+export const getUserById = async (id) => { 
+    try{
+        let response = await fetch(`/api/getUserById/?id=${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function(text) {
+            return text ? JSON.parse(text) : {}
+        })   
+    }
+    catch(e){
+        console.log(e);
+    } 
+}
+
+export const getUniversityIdByUserId = async (id) => { 
+    try{
+        let response = await fetch(`/api/getUniversityIdByUserId/?user_id=${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function(text) {
+            return text ? JSON.parse(text) : {}
+        })   
+    }
+    catch(e){
+        console.log(e);
+    } 
+}

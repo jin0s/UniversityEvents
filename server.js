@@ -63,6 +63,41 @@ app.get('/api/users', async (req, res) => {
     }
 });
 
+// Get User by ID
+app.get('/api/getUserById', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const id = req.query.id;
+    var query_str =
+      "SELECT * FROM UniversityEvents.Users \
+       WHERE id = ?";
+    var [results] =  await conn.query(query_str, id);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+// Get UniversityId by usefId
+app.get('/api/getUniversityIdByUserId', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const id = req.query.user_id;
+    console.log('id: ' + id);
+    var query_str =
+      "SELECT university_id FROM UniversityEvents.StudentOf \
+      WHERE user_id = ?";
+    var [results] =  await conn.query(query_str, id);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
 app.post('/api/login', async (req, res) => {
   /*********  Queury Paramenters *********/
   try {

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import logo from './imgs/Purple-Abstract.jpg';
+// import logo from './imgs/Purple-Abstract.jpg';
+import logo from './imgs/ucf.jpg';
 import './App.css';
 import HomeButton from './components/buttons/homeButton';
 // import Customers from './components/customers';
-import { login, getSuperAdminById } from './utils/apiCalls';
+import { login, getSuperAdminById, getUniversityIdByUserId } from './utils/apiCalls';
 
 class App extends Component {
   constructor(props){
@@ -36,14 +37,18 @@ class App extends Component {
       } 
       this.props.history.push("/home");
     }
+    let universityData = await getUniversityIdByUserId(username);
+    if (universityData.length !== 0) {
+      localStorage.setItem('university_id', universityData[0].university_id);
+    }
   }
 
   render() {
     return (
       <div className="App">
         <header id="sign_in_header" className="App-header">
-          <div className="container-left">
-          <img src={logo} width='80%' height='auto'/>
+          <div className="container-left" style = {{wiheightdth:"50%"}}>
+            <img src={logo} width='80%' height='auto'/>
           </div>
           <div className="container-right">
             <div id="logo_header">
