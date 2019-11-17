@@ -66,6 +66,57 @@ app.get('/api/users', async (req, res) => {
     }
 });
 
+// Get User by ID
+app.get('/api/getUserById', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const id = req.query.id;
+    var query_str =
+      "SELECT * FROM UniversityEvents.Users \
+       WHERE id = ?";
+    var [results] =  await conn.query(query_str, id);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+// Get UniversityId by usefId
+app.get('/api/getUniversityIdByUserId', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const id = req.query.user_id;
+    var query_str =
+      "SELECT university_id FROM UniversityEvents.StudentOf \
+      WHERE user_id = ?";
+    var [results] =  await conn.query(query_str, id);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+// Get UniversityId by university name
+app.get('/api/getUniversityIdByName', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const name = req.query.name;
+    var query_str =
+      "SELECT id FROM UniversityEvents.Universities \
+      WHERE name = ?";
+    var [results] =  await conn.query(query_str, name);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
 app.post('/api/login', async (req, res) => {
   /*********  Queury Paramenters *********/
   try {
@@ -82,6 +133,22 @@ app.post('/api/login', async (req, res) => {
     return res.json({
       status: checkPassword(req.body.inputPassword, results[0].password)
     })
+  } 
+  catch (e) {
+    console.error(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+app.post('/api/studentOf', async (req, res) => {
+  /*********  Queury Paramenters *********/
+  try {
+    var conn = pool.promise();
+    const values = [req.body.user_id, req.body.university_id];
+    var query_str = 
+      " INSERT INTO UniversityEvents.StudentOf VALUES (?, ?)";
+    var [results] =  await conn.query(query_str, values);
+    return res.json({status: 0})
   } 
   catch (e) {
     console.error(e);

@@ -22,3 +22,13 @@
 	display: block;
 	padding: 2px 1em 0 0;
 }
+
+.dd-header {
+	display: flex;
+	flex-direction: row;
+}
+
+.menu {
+	display: flex;
+	flex-direction: column;
+}

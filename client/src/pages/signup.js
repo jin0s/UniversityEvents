@@ -2,13 +2,14 @@
 import React, { useState } from 'react';
 import './signup.css';
 import HomeButton from '../components/buttons/homeButton';
-import {signUp} from '../utils/apiCalls'
-import {assign_super_admins} from '../utils/apiCalls'
+import { assign_super_admins, getUniversityIdByName, signUp, studentOf } from '../utils/apiCalls'
+import { display } from '@material-ui/system';
 
 export default props => {
     const [selectedUserLevel, setSelectedUserLevel] = useState('');
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
+    const [university,setUniversity] = useState('');
     const [confPassword,setConfPassword] = useState('');
     const [name,setName] = useState('');
 
@@ -17,6 +18,9 @@ export default props => {
     }
     const passwordHandler = password=>{
         setPassword(password);
+    }
+    const universityHandler = university=>{
+        setUniversity(university);
     }
     const confPasswordHandler = confPassword=>{
         setConfPassword(confPassword);
@@ -33,21 +37,30 @@ export default props => {
             alert("Your passwords don't match, please try again.");
         } 
         let data = await signUp(username,password,name);
+        let universityData = await getUniversityIdByName(university);
+        studentOfHandler(username, universityData[0].id)
         if (selectedUserLevel === 'super_admin') {
             let super_admin_data = await assign_super_admins(username);
             if (super_admin_data.status !== 0) {
                 alert(data.error);
             }
         }
-        if(data.status === 0){
+        if(data.status === 0 && universityData.length !== 0){
             console.log("Sign up was successful");
             props.history.push("/");
-        }
-        else{
+        } else if (universityData.length === 0) {
+            alert(university + " not found");
+        } else {
             alert(data.error);
         }
     }
-
+    
+    const studentOfHandler = async(user_id, university_id) => {
+        let data = await studentOf(user_id, university_id);
+        if (data.status !== 0) {
+            alert(data.error);
+        }
+    }
     return (
     <div className="AppSignUp">
         <div id="signUp">
@@ -81,6 +94,19 @@ export default props => {
                     </li>
                 </ul>
             </div>
+
+            {
+                selectedUserLevel === 'student'
+                ? (
+                    <div id="name_signUp">
+                        University: 
+                        <input onBlur= { e => universityHandler(e.target.value)}/>
+                    </div>
+                ):
+                (
+                    null
+                )
+            }
             <div id="name_signUp">
                 Name: 
                 <input onBlur= { e => nameHandler(e.target.value)}/>

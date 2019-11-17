@@ -172,6 +172,23 @@ export const createEvents = async (formData) => {
     } 
 }
 
+export const getUserById = async (id) => { 
+    try{
+        let response = await fetch(`/api/getUserById/?id=${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function(text) {
+            return text ? JSON.parse(text) : {}
+        })   
+    }
+    catch(e){
+        console.log(e);
+    } 
+}
+
 export const getEventByID = async (event_id) => { 
     try{
         const response = await fetch('/api/events?id=' + event_id);
@@ -179,6 +196,23 @@ export const getEventByID = async (event_id) => {
         if (response.status !== 200) throw Error(body.message);
         return body;
     } catch(e){
+        console.log(e);
+    } 
+}
+
+export const getUniversityIdByUserId = async (id) => { 
+    try{
+        let response = await fetch(`/api/getUniversityIdByUserId/?user_id=${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function(text) {
+            return text ? JSON.parse(text) : {}
+        })   
+    }
+    catch(e){
         console.log(e);
     } 
 }
@@ -203,7 +237,43 @@ export const getAllEventsByType = async (username, event_type) => {
         return body;
     }
     catch(e){
+            console.log(e);
+        } 
+    }
+    
+export const getUniversityIdByName = async (name) => { 
+    try{
+        let response = await fetch(`/api/getUniversityIdByName/?name=${name}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function(text) {
+            return text ? JSON.parse(text) : {}
+        })   
+    }
+    catch(e){
         console.log(e);
     } 
 }
 
+export const studentOf = async (user_id, university_id) => {
+    try{
+        let response = await fetch('/api/studentOf', {
+            method: 'POST',
+            body: JSON.stringify({user_id: user_id, university_id: university_id}),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function(text) {
+            console.log("StudentOf response", text);
+            return text ? JSON.parse(text) : {}
+        })
+        //return data;        
+    }
+    catch(e){
+        console.log(e);
+    } 
+}
