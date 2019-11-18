@@ -1,12 +1,10 @@
 import React, { useContext, useState, Component } from 'react';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import { create_rso } from '../../utils/apiCalls';
-import { create_admins } from '../../utils/apiCalls';
-import { getUserById } from '../../utils/apiCalls';
-import './CreateRSO.css';
+import { getUserById, create_admins, create_rso } from '../../utils/apiCalls';
+import './CreateRSOContent.css';
 
-const CreateRSO = (props) => {
+const CreateRSOContent = (props) => {
 
     const [selectedMembers, setselectedMembers] = useState([]);
     const [name, setName] = useState('');
@@ -14,7 +12,11 @@ const CreateRSO = (props) => {
     const[listOpen, setListOpen] = useState(false);
 
     const university_id = localStorage.getItem('university_id');
-    console.log('university_id: ' + university_id);
+
+    const setAdminHandler = admin=>{
+        setAdmin(admin);
+        console.log("admin: " + admin);
+    }
 
     const selectedMembersHandler = id =>{
         checkUserExists(id);
@@ -35,10 +37,11 @@ const CreateRSO = (props) => {
     }
 
     const listItems = selectedMembers.map((member, index) =>
-        <li key={index} value={member.id} onClick={()=>setAdmin(member.id)} > 
-            {member.id}
+        <li key={index} value={member.id}>
+            <a  onClick={()=>setAdminHandler(member.id)}>
+                {member.id}
+            </a>
         </li> 
-
     );
 
     const checkUserExists = async(id) => {
@@ -50,41 +53,52 @@ const CreateRSO = (props) => {
     };
 
     const createRSOHandler = async() => {
-        // let admin_data = create_admins(user_id, university_id);
-        console.log('hi');
+        // let createAdmin = createAdminHandler();
+        // if (createAdmin === -1) {
+        //     alert("Please select an Admin");
+        // }
+
+        console.log("admin: " + admin);
+        console.log("selectedMembers[0].id: " + selectedMembers[0].id);
+        console.log("selectedMembers[1].id: " + selectedMembers[1].id);
+        console.log("selectedMembers[2].id: " + selectedMembers[2].id);
+        console.log("selectedMembers[3].id: " + selectedMembers[3].id);
+        console.log("RSO name " + name);
+        console.log("university_id " + university_id);
+
+        let createRSOData = await create_rso(admin, selectedMembers[0].id, selectedMembers[1].id, 
+            selectedMembers[2].id, selectedMembers[3].id, name, university_id);
+
+        if (createRSOData.status === 0) {
+            console.log("Create RSO was successful");
+        } else {
+            alert("Error creating rso");
+        }
     }
 
-    // ** Needs to verify each memeber's eligibility in the system
-
-    // const createRSOHandler = async() => {
-    //     let admin_data = create_admins(user_id, university_id);
-    //     if (admin_data.status === 0) {
-    //         let data = await create_rso(username,password,name);
+    // const createAdminHandler = async() => {
+    //     if (university_id !== null) {
+    //         let data = await create_admins(admin, university_id);
+    //     } else {
+    //         alert(admin + " is not associated with an university");
     //     }
-       
-    //     if (selectedUserLevel === 'super_admin') {
-    //         let super_admin_data = await assign_super_admins(username);
-    //         if (super_admin_data.status !== 0) {
-    //             alert(data.error);
-    //         }
-    //     }
-    //     if(data.status === 0){
-    //         console.log("Sign up was successful");
-    //         props.history.push("/");
-    //     }
-    //     else{
-    //         alert(data.error);
-    //     }
+    //     return -1;
     // }
     
     return (
-        <div className="createUniversityContainer">
+        <div className="createRSOContainer">
             <div className="inputs">
                 <ul>
                     <li>
                         <label>
                             Name: 
                             <input onBlur = { e => NameHandler(e.target.value)}/>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Admin:
+                            <input onBlur = { e => setAdminHandler(e.target.value)}/>
                         </label>
                     </li>
                     <li>
@@ -111,13 +125,7 @@ const CreateRSO = (props) => {
                             <input onBlur = { e => selectedMembersHandler(e.target.value)}/>
                         </label>
                     </li>
-                    <li>
-                        <label>
-                            Member 5:
-                            <input onBlur = { e => selectedMembersHandler(e.target.value)}/>
-                        </label>
-                    </li>
-                    <li>
+                    {/* <li>
                         <div className="dd-wrapper">
                             <div className="dd-header" onClick={()=>setListOpenHandler()} style = {{width:"200px"}}>
                                 <div className="dd-header-title">Admin</div>
@@ -139,7 +147,7 @@ const CreateRSO = (props) => {
                                 }
                             </div> 
 
-                    </li>
+                    </li> */}
                  
                 </ul>
                 
@@ -149,4 +157,4 @@ const CreateRSO = (props) => {
     );
 }
 
-export default CreateRSO;
+export default CreateRSOContent;
