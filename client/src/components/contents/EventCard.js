@@ -79,7 +79,7 @@ const EventCard = (props) => {
                         <Button close onClick={deleteHandler}/>
                     </CardTitle>
                     <CardText className={classes.event_card_text} tag="p">
-                        {props.content}
+                        {props.description}
                     </CardText>
                     <small className="float-right text-muted">{props.start_time}</small>
                     <IconButton color="inherit">

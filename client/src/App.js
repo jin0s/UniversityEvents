@@ -4,7 +4,7 @@ import logo from './imgs/ucf.jpg';
 import './App.css';
 import HomeButton from './components/buttons/homeButton';
 // import Customers from './components/customers';
-import { login, getSuperAdminById, getUniversityIdByUserId } from './utils/apiCalls';
+import { login, getSuperAdminById, getUniversityIdByUserId, getAdminById } from './utils/apiCalls';
 
 class App extends Component {
   constructor(props){

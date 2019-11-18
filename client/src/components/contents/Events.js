@@ -39,20 +39,17 @@ const Events = (props) => {
                 {
                     events.map((value) => {
                         return (
-                          <div className={value.id}>
-
-                          </div>
-                            // <EventCard  key={value.id} 
-                            //             id={value.id} 
-                            //             datetime={value.datetime}
-                            //             description={value.description}
-                            //             name={value.name}
-                            //             contact_phone={value.contact_phone}
-                            //             contact_email={value.contact_email}
-                            //             event_type={value.event_type}
-                            //             username={localStorage.getItem('username')}
-                            //             RSO_id={value.RSO_id}  
-                            // />
+                            <EventCard  key={value.id} 
+                                        id={value.id} 
+                                        datetime={value.datetime}
+                                        description={value.description}
+                                        name={value.name}
+                                        contact_phone={value.contact_phone}
+                                        contact_email={value.contact_email}
+                                        event_type={value.event_type}
+                                        username={localStorage.getItem('username')}
+                                        RSO_id={value.RSO_id}  
+                            />
                         );
                     })
                 }

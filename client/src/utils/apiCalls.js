@@ -234,7 +234,7 @@ export const getAllEventsByType = async (username, event_type) => {
         })
         const body = await response.json();
         console.log("in apiCalls: " + body.results);
-        return body;
+        return body.results[0];
     }
     catch(e){
             console.log(e);
