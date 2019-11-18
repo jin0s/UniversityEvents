@@ -103,24 +103,24 @@ export const create_rso = async (admin_id, user_id1, user_id2, user_id3, user_id
     }
 }
 
-// export const getAdminById = async (user_id) => { 
-//     try{
-//         let response = await fetch('/api/getAdminById', {
-//             method: 'POST',
-//             body: JSON.stringify({user_id: user_id}),
-//             headers: {
-//               'Content-Type': 'application/json'
-//             }
-//         })
-//         return response.text().then(function(text) {
-//             console.log("getSuperAdminById response",text);
-//             return text ? JSON.parse(text) : {}
-//         })      
-//     }
-//     catch(e){
-//         console.log(e);
-//     } 
-// }
+export const getAdminById = async (user_id) => { 
+    try{
+        let response = await fetch('/api/getAdminById', {
+            method: 'POST',
+            body: JSON.stringify({user_id: user_id}),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function(text) {
+            console.log("getSuperAdminById response",text);
+            return text ? JSON.parse(text) : {}
+        })      
+    }
+    catch(e){
+        console.log(e);
+    } 
+}
 
 export const getSuperAdminById = async (user_id) => { 
     try{
