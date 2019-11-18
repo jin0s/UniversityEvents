@@ -36,7 +36,7 @@ const HeaderComponent = (props) => {
                     <div className="spacer"></div>
                     <div className="header_nav_items">
                         <ul>
-                            <li>{userLevel}</li>
+                            <li><a>{userLevel}</a></li>
                             <li onClick={()=>handleLogout()}><a>Log Out</a></li>
                         </ul>
                     </div>

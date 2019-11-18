@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import CreateUniversityContent from './CreateUniversityContent';
-import CreateRSO from './CreateRSO';
+import CreateRSOContent from './CreateRSOContent';
+import JoinRSOContent from './JoinRSOContent';
 import './Content.css';
 import { UsersContext } from '../../context';
 
@@ -15,8 +16,10 @@ const Content = (props) => {
             {buttonClicked === 'universityProfile' ? 
                 <CreateUniversityContent /> 
                 : buttonClicked === 'startRSO' ?
-                <CreateRSO />
-                : <div></div>
+                <CreateRSOContent />
+                : buttonClicked === 'startRSO' ?
+                <JoinRSOContent/> 
+                : null
                 }
         </div>
     );
