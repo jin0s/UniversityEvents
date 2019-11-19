@@ -494,8 +494,46 @@ app.post('/api/comment', async (req, res) => {
   }
 });
 
+// Get RSO by ID
+app.get('/api/comment', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const event_id = req.query.event_id;
+    var query_str =
+      "SELECT * FROM UniversityEvents.Comments \
+       WHERE event_id = ?";
+    var [results] =  await conn.query(query_str, event_id);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
 
 
+
+
+app.post('/api/location', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const values = [req.body.location_name, 
+                    req.body.location_address,
+                    req.body.location_city,
+                    req.body.location_state,
+                    req.body.location_zip,
+                    req.body.location_lat,
+                    req.body.location_long]; 
+    var query_str = 
+      "SELECT UniversityEvents.addlocation(?, ?, ?, ?, ?, ?, ?) AS status";
+    var [results] =  await conn.query(query_str, values);
+    return res.json(results)
+  } 
+  catch (e) {
+    console.error(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
 /***************************** END OF ROUTING ********************************/
 
 

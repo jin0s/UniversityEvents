@@ -8,10 +8,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import {withStyles} from '@material-ui/core/styles';
 import { IconButton, TextField, Badge } from '@material-ui/core';
 import { Card, CardImg, CardText, CardBody,CardTitle, CardSubtitle, Button } from 'reactstrap';
-
+import { getCommentsByEventId, addComment } from '../../utils/apiCalls'
 
 const EventCard = (props) => {
-    const [commentAdd,setCommentAdd] = useState('');
+    const [commentBeingAdded,setCommentBeingAdded] = useState('');
     const [comments,setComments] = useState([]);
     const [likes,setLikes] = useState(props.num_likes); //useState(Math.floor(Math.random()*5)+1);
     const [liked,setLiked] = useState(false);
@@ -22,26 +22,31 @@ const EventCard = (props) => {
     //     liked ? setLikes(likes-1) : setLikes(likes+1)
     }
 
-    const commentAddHandler = content =>{
-    //     setCommentAdd(content);//TODO
-    //     console.log(content);
+    const commentsHandler = async() => {
+        console.log("calling comments for event: " + props.id);
+        let result =  await getCommentsByEventId(props.id) 
+        console.log(result);
+        if(result!== null){
+            setComments(result);
+        }
+    }
+
+    const commentBeingAddedHandler = content =>{
+        setCommentBeingAdded(content);//TODO
+        console.log(content);
     }
 
     const addCommentHandler = async() =>{
-        // if(commentAdd === ''){ //If passwords don't match then dont make the api call
-        //     alert("Can't add an empty comment");
-        // }
-        // else{
-        //     let result = await addComment(token, props.id, commentAdd);
-        //     console.log("addComment Result" , result);
-        //     if(result.error === ""){
-        //         console.log("Comment added");
-        //         window.location.reload();
-        //     }
-        //     else{
-        //         alert(result.error);
-        //     }
-        // }
+        if(commentBeingAdded === ''){ //If passwords don't match then dont make the api call
+            alert("Can't add an empty comment");
+        }
+        else{
+            let result = await addComment(localStorage.getItem("user_id"), props.id, commentBeingAdded, 5);
+            console.log("addComment Result" , result);
+            alert("Thank you for the comment!");
+            setCommentBeingAdded('');
+            commentsHandler();
+        }
     }
 
     const deleteHandler = async() => {
@@ -53,10 +58,14 @@ const EventCard = (props) => {
         // }
     }
 
+    useEffect(()=>{//This will be executed always after the components have been rendered
+        commentsHandler();
+    },[]);
+
     const ToggleContent = ({ toggle, content }) => {
         const [isShown, setIsShown] = useState(false);
         const hide = () => setIsShown(false);
-        const show = () => setIsShown(true);
+        const show = () => setIsShown((!isShown && true) || (isShown && !true));
         
         return (
         <React.Fragment>
@@ -85,27 +94,26 @@ const EventCard = (props) => {
                         </Badge>
                     </IconButton>
             
-                    {/* <ToggleContent
+                    <ToggleContent
                         toggle={show => <IconButton onClick={show}><CommentButton/></IconButton>}
                         content={hide => (
                             <div>
                                 {
                                     comments.map((value) => {
                                             return (
-                                                <Comment    key={value.comment_id} 
-                                                            id={value.comment_id} 
-                                                            image_url={value.profile_pic_url}
-                                                            name={value.display_name}
-                                                            time_created={value.time_created}
-                                                            username={value.username}  
-                                                            content={value.content}
+                                                <Comment    key={value.id} 
+                                                            id={value.id} 
+                                                            name={value.user_id}
+                                                            time_created={value.timestamp}
+                                                            username={value.user_id}  
+                                                            content={value.description}
                                                 />
                                         );
                                     })
                                 }
                             </div>
                         )}
-                    /> */}
+                    />
                     <div className={classes.coment_input__button_wrap}>
                         <TextField 
                             className={classes.comment_input}
@@ -113,7 +121,8 @@ const EventCard = (props) => {
                             fullWidth 
                             multiline
                             placeholder="Make a comment..." 
-                            onBlur= { e => commentAddHandler(e.target.value)}
+                            value={commentBeingAdded}
+                            onChange= { e => commentBeingAddedHandler(e.target.value)}
                         /> 
                         <Button className={classes.comment_button} variant="primary" size="small" onClick={addCommentHandler}>
                             Comment

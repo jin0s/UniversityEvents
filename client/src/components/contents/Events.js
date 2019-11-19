@@ -1,22 +1,28 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { getAllEventsByType } from '../../utils/apiCalls';
+import { getAllEventsByType, getCommentsByEventId } from '../../utils/apiCalls';
 import EventCard from './EventCard';
 
 const Events = (props) => {
   const[events, setEvents] = useState([]);
+  const[eventType, setEventType] = useState();
+
   let username = localStorage.getItem('username');
-  let event_type = 'rso';
 
-
-  const eventsHandler = async() => {
+  const eventsHandler = async(event_type) => {
       let result =  await getAllEventsByType(username, event_type) 
       console.log(result);
-      console.log('fetching posts', result);
+      console.log('fetching events', result);
       setEvents(result);
   }
+
+  const setEventTypeHandler = data=>{
+    setEventType(data);
+    eventsHandler(data);
+    console.log(data);
+}
   
   useEffect(()=>{//This will be executed always after the components have been rendered
-    eventsHandler();
+    eventsHandler("public");
   },[]);
 
 
@@ -35,7 +41,12 @@ const Events = (props) => {
 
     // TODO: create dropdown window dynamically using api calls
     return (
-        <div className='Events'>DISCOVER SOME EVENTS
+        <div className='Events'>DISCOVER SOME EVENTS                    
+            <select value={eventType} onChange={ e=> setEventTypeHandler(e.target.value)}>
+                <option value="public">Public Events</option>
+                <option value="private">Private Events</option>
+                <option value="rso">RSO Events</option>
+            </select>
                 {
                     events.map((value) => {
                         return (
