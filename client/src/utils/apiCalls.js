@@ -325,7 +325,7 @@ export const addComment = async (user_id, event_id, description, rating) => {
 
 export const addLocation = async (location_name,location_address,location_city,location_state,location_zip,location_lat,location_long) => {
     try {
-        let response = await fetch('/api/comment', {
+        let response = await fetch('/api/location', {
             method: 'POST',
             body: JSON.stringify({
                 location_name : location_name,
@@ -345,6 +345,42 @@ export const addLocation = async (location_name,location_address,location_city,l
             return text ? JSON.parse(text) : {}
         })
         //return data;        
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+export const getLocationForUser = async (id) => {
+    try {
+        let response = await fetch(`/api/location?user_id=${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const body = await response.json();
+        return body[0];
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+export const getEventsByLocation = async (user_id,location_name) => {
+    try {
+        let response = await fetch('/api/eventsbylocation', {
+            method: 'POST',
+            body: JSON.stringify({
+                user_id : user_id,
+                location_name : location_name
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const body = await response.json();
+        return body[0];       
     }
     catch (e) {
         console.log(e);

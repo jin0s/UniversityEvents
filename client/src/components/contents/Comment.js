@@ -34,6 +34,8 @@ const Comment = (props) => {
                     <small className="m-1 float-right text-muted">{props.time_created}</small>
                     <h6 className="mt-0 mb-1 text-muted">{props.username + " says:"}</h6>
                     {props.content}
+                    <h6 className="mt-0 mb-1 text-muted">{"rating: "}</h6>
+                    {props.rating}
                 </div>
             </div>
         </div>

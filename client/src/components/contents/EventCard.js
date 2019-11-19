@@ -17,12 +17,15 @@ const EventCard = (props) => {
     const [commentBeingAdded,setCommentBeingAdded] = useState('');
     const [comments,setComments] = useState([]);
     const [likes,setLikes] = useState(props.num_likes); //useState(Math.floor(Math.random()*5)+1);
-    const [liked,setLiked] = useState(false);
+    const [rating,setRating] = useState(0);
     const {classes} = props;
 
-    const likeHandler = async() => {
-    //     liked ? setLiked(false) : setLiked(true)
-    //     liked ? setLikes(likes-1) : setLikes(likes+1)
+
+    const likeHandler = async(data) => {
+    }
+    
+    const ratingHandler = async(data) => {
+        setRating(data);
     }
 
     const commentsHandler = async() => {
@@ -44,7 +47,7 @@ const EventCard = (props) => {
             alert("Can't add an empty comment");
         }
         else{
-            let result = await addComment(localStorage.getItem("user_id"), props.id, commentBeingAdded, 5);
+            let result = await addComment(localStorage.getItem("user_id"), props.id, commentBeingAdded, rating);
             console.log("addComment Result" , result);
             alert("Thank you for the comment!");
             setCommentBeingAdded('');
