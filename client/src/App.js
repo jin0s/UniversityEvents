@@ -57,37 +57,44 @@ class App extends Component {
             <img src={logo} width='80%' height='auto'/>
           </div>
           <div className="container-right">
-            <div id="logo_header">
-                <p className='uniEvents'>University Events</p>
+            <div className="logo_header">
+                <label className='uniEvents'>University Events</label>
             </div>
-            <div id="loginDiv">
-              <div id="username_login">
-                Username:
-                <input 
-                  className='username'
-                  name="username" 
-                  placeholder="Username" 
-                  value={this.state.username} 
-                  onChange={this.handleInputChange} 
-                  required
-                />
+            <div className="loginDiv">
+              <div className="userInput">
+                <label>Username:</label>
+                <div>
+                  <input 
+                    className='username'
+                    name="username" 
+                    placeholder="Username" 
+                    value={this.state.username} 
+                    onChange={this.handleInputChange} 
+                    required
+                  />
+                </div>
               </div>
-              <div id="password_login">
-                Password: 
-                <input 
-                  className='password'
-                  name="inputPassword" 
-                  placeholder="Password" 
-                  type='password' 
-                  value={this.state.password} 
-                  onChange={this.handleInputChange} 
-                  required
-                />
+              <div className="userInput">
+                <label>Password:</label>
+                <div>
+                  <input 
+                    className='password'
+                    name="inputPassword" 
+                    placeholder="Password" 
+                    type='password' 
+                    value={this.state.password} 
+                    onChange={this.handleInputChange} 
+                    required
+                  />
+                </div>
               </div>
-              <button className='login' onClick={this.loginHandler}> LOGIN </button>
-              <HomeButton className='signup' path='/signup' {...this.props}>SIGN UP</HomeButton>
             </div>
-          </div>
+            <div className="buttonContainer">
+              <button className='buttons' onClick={this.loginHandler}> LOGIN </button>
+              <HomeButton className='buttons' path='/signup' {...this.props}>SIGN UP</HomeButton>
+            </div>
+            </div>
+          
         </header>
       </div>
     );

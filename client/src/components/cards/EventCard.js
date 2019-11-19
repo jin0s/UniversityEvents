@@ -1,20 +1,14 @@
 import React, { Component, useState, useEffect} from 'react';
-// import {deletePost, addComment, grabAllComments} from '../../utils/apiCalls';
-import Comment from './Comment';
-import LikeButton from '@material-ui/icons/FavoriteBorder';
+import Comment from '../contents/Comment';
 import CommentButton from '@material-ui/icons/Comment';
-import styles from '../../styles/styles';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import Badge from '@material-ui/core/Badge';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import {withStyles} from '@material-ui/core/styles';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import StarIcon from '@material-ui/icons/Star';
 import Ratings from 'react-ratings-declarative';
 import { Card, CardImg, CardText, CardBody,CardTitle, CardSubtitle, Button } from 'reactstrap';
 import { getCommentsByEventId, addComment } from '../../utils/apiCalls';
+import './Card.css';
 
 const EventCard = (props) => {
     const [commentBeingAdded,setCommentBeingAdded] = useState('');
@@ -86,14 +80,14 @@ const EventCard = (props) => {
     
 
     return (
-        <div className={classes.event_div} id={props.id} >
-            <Card className={classes.event_card} elevation={4} >
-                <CardBody className={classes.event_card_body}>
-                    <CardTitle className={classes.event_card_title} tag="h1"> 
+        <div className='cardContainer' id={props.id} >
+            <Card className='card' elevation={4} >
+                <CardBody className='cardBody'>
+                    <CardTitle className='cardTitle' tag="h1"> 
                         {props.name}
                         <Button close onClick={deleteHandler}/>
                     </CardTitle>
-                    <CardText className={classes.event_card_text} tag="p">
+                    <CardText className='cardText' tag="p">
                         {props.description}
                     </CardText>
                     <small className="float-right text-muted">{props.start_time}</small>
@@ -124,9 +118,9 @@ const EventCard = (props) => {
                             </div>
                         )}
                     />
-                    <div className={classes.coment_input__button_wrap}>
+                    <div className='TextFieldContainer'>
                         <TextField 
-                            className={classes.comment_input}
+                            className="textField"
                             id="textPopUp" 
                             fullWidth 
                             multiline
@@ -147,7 +141,7 @@ const EventCard = (props) => {
                                 <Ratings.Widget />
                             </Ratings>
                         </div>
-                        <Button className={classes.comment_button} variant="primary" size="small" onClick={addCommentHandler}>
+                        <Button className='button' variant="primary" size="small" onClick={addCommentHandler}>
                             Comment
                         </Button>
                     </div>
@@ -157,4 +151,4 @@ const EventCard = (props) => {
     );
 };
 
-export default withStyles(styles)(EventCard);
+export default (EventCard);

@@ -465,7 +465,7 @@ app.post('/api/join_rso', async (req, res) => {
     const values = [req.body.user_id, 
                     req.body.rso_id];
     var query_str = 
-      "INSERT INTO Member (user_id, RSO_id) VALUES (?, ?)";
+      "INSERT INTO UniversityEvents.Member (user_id, RSO_id) VALUES (?, ?)";
     var [results] =  await conn.query(query_str, values);
     return res.json({status: 0})
   } 

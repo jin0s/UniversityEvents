@@ -64,9 +64,9 @@ export default props => {
     return (
     <div className="AppSignUp">
         <div id="signUp">
-            <h1> SignUp </h1> 
-            <div className="userLevel">
-                User Role
+            <h1> Sign Up </h1> 
+            <label>User Role</label>
+            <div className="userLevel" style={{paddingTop: '20px'}}>
                 <ul>
                     <li>
                         <label>
@@ -75,7 +75,6 @@ export default props => {
                             value="student"
                             checked={selectedUserLevel === 'student'}
                             onChange={ e => selectedUserLevelHandler(e.target.value)}
-                            className="form-check-input"
                             />
                             Student
                         </label>
@@ -87,7 +86,6 @@ export default props => {
                             value="super_admin"
                             checked={selectedUserLevel === 'super_admin'}
                             onChange={ e => selectedUserLevelHandler(e.target.value)}
-                            className="form-check-input"
                             />
                             Super Admin
                         </label>
@@ -107,24 +105,34 @@ export default props => {
                     null
                 )
             }
-            <div id="name_signUp">
-                Name: 
-                <input onBlur= { e => nameHandler(e.target.value)}/>
+            <div className="signUpInfo" style={{paddingTop: '25px'}}>
+                <div id="name_signUp">
+                    <label>Name: </label>
+                    <div>
+                        <input class="effect-1" type="text" onBlur= { e => nameHandler(e.target.value)}/>
+                    </div>
+                </div>
+                <div id="username_signUp" style={{paddingTop: '15px'}}>
+                    <label >Username: </label>
+                    <div>
+                        <input type="text" onBlur= { e => usernameHandler(e.target.value)}/>
+                    </div>
+                </div>
+                <div id="password_signUp" style={{paddingTop: '15px'}}>
+                    <label>Password: </label>
+                    <div>
+                        <input type="text" type='password' onBlur= { e => passwordHandler(e.target.value)}/>
+                    </div>
+                </div>
+                <div id="confirm_password_signUp" style={{paddingTop: '15px'}}>
+                    <label>Retype Password: </label>
+                    <div>
+                        <input type='password' onBlur= { e => confPasswordHandler(e.target.value)}/>
+                    </div>
+                </div>
             </div>
-            <div id="username_signUp">
-                Username:
-                <input onBlur= { e => usernameHandler(e.target.value)}/>
-            </div>
-            <div id="password_signUp">
-                Password: 
-                <input type='password' onBlur= { e => passwordHandler(e.target.value)}/>
-            </div>
-            <div id="confirm_password_signUp">
-                Retype Password: 
-                <input type='password' onBlur= { e => confPasswordHandler(e.target.value)}/>
-            </div>
-            <button className="signUp" onClick={()=>signUpHandler()}> SIGN UP </button>
-            <HomeButton className='signUp' path='/' {...props}>BACK</HomeButton>
+            <button className="signUpButton" onClick={()=>signUpHandler()}> SIGN UP </button>
+            <HomeButton className='signUpButton' path='/' {...props}>BACK</HomeButton>
         </div>
     </div>
     )

@@ -314,6 +314,29 @@ export const get_user_rso = async (id) => {
     }
 }
 
+export const join_rso = async (user_id, rso_id) => {
+    try {
+        let response = await fetch('/api/join_rso', {
+            method: 'POST',
+            body: JSON.stringify({
+                user_id: user_id,
+                rso_id: rso_id
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function (text) {
+            console.log("addComment response", text);
+            return text ? JSON.parse(text) : {}
+        })
+        //return data;        
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
 export const addComment = async (user_id, event_id, description, rating) => {
     try {
         let response = await fetch('/api/comment', {

@@ -26,7 +26,9 @@ const Content = (props) => {
                 <Events />
                 : buttonClicked === 'discoverEventsByLocation' ?
                 <EventsByLocation />
-                : <div></div>
+                : buttonClicked === 'joinRSO' ?
+                <JoinRSOContent />
+                : null
                 }
         </div>
     );

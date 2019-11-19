@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import './CreateUniversityContent.css';
+import './CreateRSOContent.css';
 import { createEvents, addLocation } from '../../utils/apiCalls';
 import Geocode from "react-geocode";
 import Map from '../maps/Map';
@@ -144,9 +144,8 @@ const CreateEventContent = ({ options, onMount, className }) => {
 
     // TODO: create dropdown window dynamically using api calls
     return (
-        <div className="createEventContainer">
-            <div id="signUp">
-                <div className="input">
+        <div className="inputs">
+            <div className="dropdown">
                     Event Category: 
                     <select value={category} onChange={ e => setCategoryHandler(e.target.value)}>
                         <option value="1">
@@ -166,45 +165,67 @@ const CreateEventContent = ({ options, onMount, className }) => {
                         </option>
                     </select>
                 </div>
-                <div className="input">
-                    Name: 
-                    <input onBlur={ e => nameHandler(e.target.value)}/>
-                </div>
-                <div className="input">
-                    Date: 
-                    <input onBlur={ e => dateHandler(e.target.value)}/>
-                </div>
-                <div className="input">
-                    Time: 
-                    <input onBlur={ e => timeHandler(e.target.value)}/>
-                </div>
-                <div className="input">
-                    Description:
-                    <input onBlur={ e => descriptionHandler(e.target.value)}/>
-                </div>
-                <div className="input">
-                    Contact Phone: 
-                    <input onBlur={ e => contactPhoneHandler(e.target.value)}/>
-                </div>
-                <div className="input">
-                    Contact Email: 
-                    <input onBlur={ e => contactEmailHandler(e.target.value)}/>
-                </div>
-                <div className="input">
-                    RSO:
-                    <input onBlur= { e => rsoHandler(e.target.value)} />
-                </div>
-                <div className="input">
-                    Event Type:
-                    <input onBlur= { e => eventTypeHandler(e.target.value)} />
-                </div>
-                <div className="input">
-                    Location Description:
-                    <input onBlur= { e => setLocation_nameHandler(e.target.value)} />
-                    <Map isMarkerShown={isMarkerShown} currentLocation={{lat: lat, lng: lng}}/>
-                </div>
-                <button className="submit" onClick={()=>createEventHandler()}> SUBMIT </button>
+            <ul>
+                <li>
+                    <label>
+                        Name: 
+                        <input type='text' onBlur = { e => nameHandler(e.target.value)}/>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Date: 
+                        <input type='text' onBlur = { e => dateHandler(e.target.value)}/>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Time:
+                        <input type='text' onBlur = { e => timeHandler(e.target.value)}/>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Description:
+                        <input type='text' onBlur = { e => descriptionHandler(e.target.value)}/>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Contact Phone: 
+                        <input type='text' onBlur = { e => contactPhoneHandler(e.target.value)}/>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Contact Email: 
+                        <input type='text'onBlur = { e => contactEmailHandler(e.target.value)}/>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        RSO:
+                        <input type='text' onBlur = { e => rsoHandler(e.target.value)}/>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Event Type:
+                        <input type='text' onBlur = { e => eventTypeHandler(e.target.value)}/>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Location Description:
+                        <input type='text' onBlur = { e => setLocation_nameHandler(e.target.value)}/>
+                    </label>
+                </li>
+            </ul>
+            <div className="map">
+                <Map isMarkerShown={isMarkerShown} currentLocation={{lat: lat, lng: lng}}/>
             </div>
+            
+            <button className="button" onClick={()=>createEventHandler()}> SUBMIT </button>
         </div>
     );
 }

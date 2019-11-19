@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { getAllEventsByType, getCommentsByEventId, getEventsByLocation, getLocationForUser} from '../../utils/apiCalls';
-import EventCard from './EventCard';
+import EventCard from '../cards/EventCard';
 
 const EventsByLocation = (props) => {
   const[events, setEvents] = useState([]);

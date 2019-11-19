@@ -86,73 +86,47 @@ const CreateRSOContent = (props) => {
     // }
     
     return (
-        <div className="createRSOContainer">
-            <div className="inputs">
-                <ul>
-                    <li>
-                        <label>
-                            Name: 
-                            <input onBlur = { e => NameHandler(e.target.value)}/>
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            Admin:
-                            <input onBlur = { e => setAdminHandler(e.target.value)}/>
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            Member 1:
-                            <input onBlur = { e => selectedMembersHandler(e.target.value)}/>
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            Member 2:
-                            <input onBlur = { e => selectedMembersHandler(e.target.value)}/>
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            Member 3:
-                            <input onBlur = { e => selectedMembersHandler(e.target.value)}/>
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            Member 4:
-                            <input onBlur = { e => selectedMembersHandler(e.target.value)}/>
-                        </label>
-                    </li>
-                    {/* <li>
-                        <div className="dd-wrapper">
-                            <div className="dd-header" onClick={()=>setListOpenHandler()} style = {{width:"200px"}}>
-                                <div className="dd-header-title">Admin</div>
-                                    {listOpen
-                                        ? <KeyboardArrowUpIcon />
-                                        : <KeyboardArrowDownIcon />
-                                    }
-                            </div>
-                                {
-                                    listOpen
-                                    ? (
-                                        <ul>
-                                            {listItems} 
-                                        </ul>
-                                    ):
-                                    (
-                                        null
-                                    )
-                                }
-                            </div> 
-
-                    </li> */}
-                 
-                </ul>
+        <div className="inputs">
+            <ul>
+                <li>
+                    <label>
+                        Name:
+                        <input type='text'  onBlur = { e => NameHandler(e.target.value)}/>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Admin: 
+                        <input type='text' onBlur = { e => setAdminHandler(e.target.value)}/>
+                    </label>    
+                </li>
+                <li>
+                    <label>
+                        Member 1:
+                        <input type='text' onBlur = { e => selectedMembersHandler(e.target.value)}/>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Member 2:
+                        <input type='text' onBlur = { e => selectedMembersHandler(e.target.value)}/>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Member 3:
+                        <input type='text' onBlur = { e => selectedMembersHandler(e.target.value)}/>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Member 4:
+                        <input type='text'onBlur = { e => selectedMembersHandler(e.target.value)}/>
+                    </label>
+                </li>
                 
-                <button className="createRSO" onClick={()=>createRSOHandler()}> SUBMIT </button>
-            </div>
+            </ul>
+            <button className="button" onClick={()=>createRSOHandler()}> SUBMIT </button>
         </div>
     );
 }

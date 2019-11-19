@@ -1,11 +1,4 @@
 import React, { Component } from 'react';
-// import {deleteComment} from '../utils/apiCalls';
-
-// import GuildSword from '../imgs/0_GuildSword_Icon.png';
-// import Sword from '../imgs/1_Sword_Icon.png';
-// import BowArrow from '../imgs/2_BowArrow_Icon.png';
-// import Staff from '../imgs/3_Staff_Icon.png';
-// import Shield from '../imgs/4_Shield_Icon.png';
 import { Button } from 'reactstrap';
 
 

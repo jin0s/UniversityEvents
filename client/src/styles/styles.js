@@ -13,7 +13,7 @@ const styles = theme => ({
         marginRight:'17%',
         width:'66%',
         maxWidth: '900px',
-        marginBottom:'50px',
+        marginBottom:'50px'
     },
     post_card_body:{
         /*border: '1px solid black' ,*/
@@ -30,7 +30,6 @@ const styles = theme => ({
         color: "white",
         backgroundColor:"#b20949",
         height:'38px',
-        borderRadius:'4px',
         textAlign:'center',
         marginRight: '5px',
         marginLeft: '5px',
@@ -42,7 +41,6 @@ const styles = theme => ({
         '&:hover': {
         backgroundColor: fade(theme.palette.common.white, 0.25),},
         position: 'relative',
-        borderRadius: theme.shape.borderRadius,
         backgroundColor: fade(theme.palette.common.white, 0.15),
         '&:hover': {
         backgroundColor: fade(theme.palette.common.white, 0.25),

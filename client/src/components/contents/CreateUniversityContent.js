@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import './CreateUniversityContent.css';
+import './CreateRSOContent.css';
 import { createUniversities } from '../../utils/apiCalls';
 
 const CreateUniversityContent = (props) => {
@@ -13,7 +13,6 @@ const CreateUniversityContent = (props) => {
     // const [files, setFiles] = useState([]); 
 
     const createUniversityHandler = async() => {
-        console.log(pictures)
         const formData = new FormData();
         formData.append('super_user_id', super_user_id);
         formData.append('name', name);
@@ -21,7 +20,9 @@ const CreateUniversityContent = (props) => {
         formData.append('location_address', address);
         formData.append('num_of_students', num_of_students);
         let data = await createUniversities(formData);
-        console.log(data);
+        if (data.status === 0) {
+            alert(name + "profile created");
+        }
     }
 
     const setAddressHandler = address => {
@@ -41,26 +42,34 @@ const CreateUniversityContent = (props) => {
     }
 
     return (
-        <div className="createUniversityContainer">
-            <div id="signUp">
-                <div className="input">
-                    Name: 
-                    <input onBlur={ e => nameHandler(e.target.value)}/>
-                </div>
-                <div className="input">
-                    Pictures:
-                    <input type="file" name="pictures" onBlur={ e => picturesHandler(e)} />
-                </div>
-                <div className="input">
-                    Address: 
-                    <input onBlur={ e => setAddressHandler(e.target.value)}/>
-                </div>
-                <div className="input">
-                    Number of Students:
-                    <input onBlur= { e => num_of_studentsHandler(e.target.value)} />
-                </div>
-                <button className="submit" onClick={()=>createUniversityHandler()}> SUBMIT </button>
-            </div>
+         <div className="inputs">
+            <ul>
+                <li>
+                    <label>
+                        Name:
+                        <input type='text'  onBlur = { e => nameHandler(e.target.value)}/>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Pictures: 
+                        <input type="file" name="pictures" onBlur={ e => picturesHandler(e)} />
+                    </label>    
+                </li>
+                <li>
+                    <label>
+                        Address: 
+                        <input type='text' onBlur = { e => setAddressHandler(e.target.value)}/>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Number of Students:
+                        <input type='text' onBlur = { e => num_of_studentsHandler(e.target.value)}/>
+                    </label>
+                </li>
+            </ul>
+            <button className="button" onClick={()=>createUniversityHandler()}> SUBMIT </button>
         </div>
     );
 }
