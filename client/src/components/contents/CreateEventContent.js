@@ -4,6 +4,7 @@ import { createEvents, addLocation } from '../../utils/apiCalls';
 import Geocode from "react-geocode";
 import Map from '../maps/Map';
 
+
 const CreateEventContent = ({ options, onMount, className }) => {
  
     const [id, setId] = useState('');
@@ -191,12 +192,22 @@ const CreateEventContent = ({ options, onMount, className }) => {
                     <input onBlur={ e => contactEmailHandler(e.target.value)}/>
                 </div>
                 <div className="input">
-                    RSO:
-                    <input onBlur= { e => rsoHandler(e.target.value)} />
+                    Event Type:
+                    <select value={eventType} onChange={ e => eventTypeHandler(e.target.value)}>
+                        <option value="public">
+                            Public Event
+                        </option>
+                        <option value="private">
+                            Private Event
+                        </option>
+                        <option value="rso">
+                            Register Student Org Event
+                        </option>
+                    </select>
                 </div>
                 <div className="input">
-                    Event Type:
-                    <input onBlur= { e => eventTypeHandler(e.target.value)} />
+                    RSO:
+                    <input onBlur= { e => rsoHandler(e.target.value)} />
                 </div>
                 <div className="input">
                     Location Description:

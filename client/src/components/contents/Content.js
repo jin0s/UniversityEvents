@@ -3,10 +3,12 @@ import CreateUniversityContent from './CreateUniversityContent';
 import CreateRSOContent from './CreateRSOContent';
 import JoinRSOContent from './JoinRSOContent';
 import EventsByLocation from './EventsByLocation';
+import ManageRSO from './ManageRSO';
 import './Content.css';
 import { UsersContext } from '../../context';
 import CreateEventContent from './CreateEventContent';
 import Events from './Events';
+import {getApproveEvents} from '../../utils/apiCalls';
 
 const Content = (props) => {
     const usersContext = useContext(UsersContext);
@@ -26,6 +28,8 @@ const Content = (props) => {
                 <Events />
                 : buttonClicked === 'discoverEventsByLocation' ?
                 <EventsByLocation />
+                : buttonClicked === 'manageRSO' ?
+                <ManageRSO />
                 : <div></div>
                 }
         </div>
