@@ -1,0 +1,23 @@
+
+On sign up pass the university to populate StudentOf relationship table
+
+Admin and RSO can create events
+
+home.js -> 
+
+How does clicking the side bar changes the display
+- Click create events on admin view
+- Form to create the event -> API call
+
+How can i pull in a list of JSON from database and build a list of events
+- Based on the user pull a list of all event
+- Filter options:
+  - See by public, private, and rso levels
+  - Search by location
+
+- Click on the event to open the event details page
+- Add comments to the event/rating
+
+
+changes
+- Added admin logic to sidebar and header
