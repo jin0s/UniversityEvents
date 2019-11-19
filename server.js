@@ -511,6 +511,23 @@ app.get('/api/comment', async (req, res) => {
   }
 });
 
+
+// Get Locaiton by User
+app.get('/api/location', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const id = req.query.user_id;
+    var query_str =
+      "CALL UniversityEvents.getallavaiablelocationsforuser(?)";
+    var [results] =  await conn.query(query_str, id);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
 app.post('/api/location', async (req, res) => {
   try {
     var conn = pool.promise();
@@ -523,6 +540,22 @@ app.post('/api/location', async (req, res) => {
                     req.body.location_long]; 
     var query_str = 
       "SELECT UniversityEvents.addlocation(?, ?, ?, ?, ?, ?, ?) AS status";
+    var [results] =  await conn.query(query_str, values);
+    return res.json(results)
+  } 
+  catch (e) {
+    console.error(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+app.post('/api/eventsbylocation', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const values = [req.body.user_id, 
+                    req.body.location_name]; 
+    var query_str = 
+      "CALL UniversityEvents.getalluserseventsbasedonlocation(?, ?)";
     var [results] =  await conn.query(query_str, values);
     return res.json(results)
   } 

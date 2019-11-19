@@ -28,6 +28,10 @@ const SidebarContent = () => {
   if (userLevel === "Super Admin") {
     content = <div className="sidebar" id="superAdmin_sidebar">
       <ul>
+        {/* Students can view events */}
+        <li onClick={ e => setButtonClicked('discoverEvents')}><span>DISCOVER EVENTS</span></li>
+        {/* Students can view events by location*/}
+        <li onClick={ e => setButtonClicked('discoverEventsByLocation')}><span>DISCOVER EVENTS BY LOCATION</span></li>
           {/* Super admins can create profiles for a university*/}
         <li onClick={ e => setButtonClicked('universityProfile')}><span>CREATE AN UNIVERSITY PROFILE</span></li>
         {/* Events created without an RSO need to be approved by a super admin */}
@@ -37,6 +41,10 @@ const SidebarContent = () => {
   } else if (userLevel === "Admin") {
     content = <div className="sidebar" id="admin_sidebar">
       <ul>
+        {/* Students can view events */}
+        <li onClick={ e => setButtonClicked('discoverEvents')}><span>DISCOVER EVENTS</span></li>
+        {/* Students can view events by location*/}
+        <li onClick={ e => setButtonClicked('discoverEventsByLocation')}><span>DISCOVER EVENTS BY LOCATION</span></li>
         {/* Admin  can  create  events */}
         <li onClick={ e => setButtonClicked('createEvent')}><span>CREATE AN EVENT</span></li>
       </ul>
@@ -46,6 +54,8 @@ const SidebarContent = () => {
       <ul>
         {/* Students can view events */}
         <li onClick={ e => setButtonClicked('discoverEvents')}><span>DISCOVER EVENTS</span></li>
+        {/* Students can view events by location*/}
+        <li onClick={ e => setButtonClicked('discoverEventsByLocation')}><span>DISCOVER EVENTS BY LOCATION</span></li>
         {/* Students can join an existing RSO */}
         <li onClick={ e => setButtonClicked('joinRSO')}><span>JOIN AN RSO</span></li>
         {/* A student  user  can  request  to  create a  new  RSO  */}

@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import CreateUniversityContent from './CreateUniversityContent';
 import CreateRSOContent from './CreateRSOContent';
 import JoinRSOContent from './JoinRSOContent';
+import EventsByLocation from './EventsByLocation';
 import './Content.css';
 import { UsersContext } from '../../context';
 import CreateEventContent from './CreateEventContent';
@@ -23,6 +24,8 @@ const Content = (props) => {
                 <CreateEventContent /> 
                 : buttonClicked === 'discoverEvents' ?
                 <Events />
+                : buttonClicked === 'discoverEventsByLocation' ?
+                <EventsByLocation />
                 : <div></div>
                 }
         </div>

@@ -364,3 +364,39 @@ export const addLocation = async (location_name,location_address,location_city,l
         console.log(e);
     }
 }
+
+export const getLocationForUser = async (id) => {
+    try {
+        let response = await fetch(`/api/location?user_id=${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const body = await response.json();
+        return body[0];
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+export const getEventsByLocation = async (user_id,location_name) => {
+    try {
+        let response = await fetch('/api/eventsbylocation', {
+            method: 'POST',
+            body: JSON.stringify({
+                user_id : user_id,
+                location_name : location_name
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const body = await response.json();
+        return body[0];       
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
