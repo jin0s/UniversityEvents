@@ -10,6 +10,9 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Badge from '@material-ui/core/Badge';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import {withStyles} from '@material-ui/core/styles';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarIcon from '@material-ui/icons/Star';
+import Ratings from 'react-ratings-declarative';
 import { Card, CardImg, CardText, CardBody,CardTitle, CardSubtitle, Button } from 'reactstrap';
 import { getCommentsByEventId, addComment } from '../../utils/apiCalls';
 
@@ -127,6 +130,23 @@ const EventCard = (props) => {
                             value={commentBeingAdded}
                             onChange= { e => commentBeingAddedHandler(e.target.value)}
                         /> 
+                        <div className='rating' >
+                            <Ratings
+                                rating={this.state.rating}
+                                widgetRatedColors="blue"
+                                changeRating={this.changeRating}
+                            >
+                                <Ratings.Widget />
+                                <Ratings.Widget />
+                                <Ratings.Widget
+                                widgetDimension="60px"
+                                svgIconViewBox="0 0 5 5"
+                                svgIconPath="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z"
+                                />
+                                <Ratings.Widget widgetHoverColor="black" />
+                                <Ratings.Widget />
+                            </Ratings>
+                        </div>
                         <Button className={classes.comment_button} variant="primary" size="small" onClick={addCommentHandler}>
                             Comment
                         </Button>

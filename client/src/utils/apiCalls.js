@@ -297,6 +297,23 @@ export const getCommentsByEventId = async (id) => {
     }
 }
 
+export const get_user_rso = async (id) => {
+    try {
+        let response = await fetch(`/api/user_rso/?user_id=${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function (text) {
+            return text ? JSON.parse(text) : {}
+        })
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
 export const addComment = async (user_id, event_id, description, rating) => {
     try {
         let response = await fetch('/api/comment', {

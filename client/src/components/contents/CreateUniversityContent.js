@@ -1,15 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import './CreateUniversityContent.css';
-import { createUniversities } from '../../utils/apiCalls'
+import { createUniversities } from '../../utils/apiCalls';
 
 const CreateUniversityContent = (props) => {
 
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [pictures, setPictures] = useState(''); 
-    const [location_address, setLocation_address] = useState('');
     const [num_of_students, setNum_of_students] = useState('');
     let super_user_id = localStorage.getItem('super_admin_id');
+    const [address, setAddress] = useState('');
     // const [files, setFiles] = useState([]); 
 
     const createUniversityHandler = async() => {
@@ -18,10 +18,14 @@ const CreateUniversityContent = (props) => {
         formData.append('super_user_id', super_user_id);
         formData.append('name', name);
         formData.append('pictures', pictures, pictures.name);
-        formData.append('location_address', location_address);
+        formData.append('location_address', address);
         formData.append('num_of_students', num_of_students);
         let data = await createUniversities(formData);
         console.log(data);
+    }
+
+    const setAddressHandler = address => {
+        setAddress(address);
     }
 
     const nameHandler = name=>{
@@ -32,14 +36,10 @@ const CreateUniversityContent = (props) => {
         setPictures(pictures.target.files[0]);
     }
 
-    const location_addressHandler = location_address=>{
-        setLocation_address(location_address);
-    }
-
     const num_of_studentsHandler = num_of_students=>{
         setNum_of_students(num_of_students);
     }
-    
+
     return (
         <div className="createUniversityContainer">
             <div id="signUp">
@@ -53,7 +53,7 @@ const CreateUniversityContent = (props) => {
                 </div>
                 <div className="input">
                     Address: 
-                    <input onBlur={ e => location_addressHandler(e.target.value)}/>
+                    <input onBlur={ e => setAddressHandler(e.target.value)}/>
                 </div>
                 <div className="input">
                     Number of Students:

@@ -25,16 +25,6 @@ const CreateEventContent = ({ options, onMount, className }) => {
     let admin = localStorage.getItem('admin');
 
     Geocode.setApiKey("AIzaSyB1CO8yPPEfqQ3HbUscpQu8FvbCFzj6klU");
- 
-    // set response language. Defaults to english.
-    Geocode.setLanguage("en");
-    
-    // set response region. Its optional.
-    // A Geocoding request with region=es (Spain) will return the Spanish city.
-    Geocode.setRegion("es");
-    
-    // Enable or disable logs. Its optional.
-    Geocode.enableDebug();
 
     const setLatHandler = lat => {
         setLat(lat);

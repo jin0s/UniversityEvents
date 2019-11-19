@@ -6,6 +6,7 @@ import {
   GoogleMap,
   Marker
 } from "react-google-maps";
+import Autocomplete from 'react-google-autocomplete';
 
 const Map = compose(
   withProps({
@@ -26,6 +27,5 @@ const Map = compose(
   </GoogleMap>
   
 ));
-
 
 export default Map;
