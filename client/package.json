@@ -4,8 +4,13 @@
   "private": true,
   "dependencies": {
     "@material-ui/icons": "^4.5.1",
+    "google-maps-api-loader": "^1.1.1",
+    "google-maps-react": "^2.0.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-geocode": "^0.2.1",
+    "react-google-location": "^1.2.2",
+    "react-google-maps": "^9.4.5",
     "react-icons": "^3.8.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "1.0.17",

@@ -1,8 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './CreateUniversityContent.css';
-import { createEvents } from '../../utils/apiCalls'
+import { createEvents, addLocation } from '../../utils/apiCalls';
+import Geocode from "react-geocode";
+import Map from '../maps/Map';
 
-const CreateEventContent = (props) => {
+const CreateEventContent = ({ options, onMount, className }) => {
  
     const [id, setId] = useState('');
     const [category, setCategory] = useState('');
@@ -14,8 +16,78 @@ const CreateEventContent = (props) => {
     const [email, setContactEmail] = useState('');
     const [rso, setRSO] = useState('');
     const [eventType, setEventType] = useState('');
+    const [lat, setLat] = useState(0);
+    const [lng, setLng] = useState(0);
+    const [address, setAddress] = useState([]);
+    const [location_name, setLocation_name] = useState([]);
+    const [isMarkerShown, setIsMarkerShown] = useState('');
     let super_user_id = localStorage.getItem('super_admin_id');
     let admin = localStorage.getItem('admin');
+
+    Geocode.setApiKey("AIzaSyB1CO8yPPEfqQ3HbUscpQu8FvbCFzj6klU");
+ 
+    // set response language. Defaults to english.
+    Geocode.setLanguage("en");
+    
+    // set response region. Its optional.
+    // A Geocoding request with region=es (Spain) will return the Spanish city.
+    Geocode.setRegion("es");
+    
+    // Enable or disable logs. Its optional.
+    Geocode.enableDebug();
+
+    const setLatHandler = lat => {
+        setLat(lat);
+    }
+
+    const setLngHandler = lng => {
+        setLng(lng);
+    }
+
+    const setLocation_nameHandler = location_name => {
+        setLocation_name(location_name);
+    }
+
+    const setIsMarkerShownHandler = isMarkerShown => {
+        setIsMarkerShown(isMarkerShown);
+    }
+
+    const addressHandler = (location_address, location_city, location_state, location_zip) =>{
+        setAddress([
+            ...address,
+            {
+                location_address: location_address,
+                location_city: location_city,
+                location_state: location_state,
+                location_zip: location_zip,
+            }
+        ]);
+        
+    }
+
+    const showCurrentLocation = () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            position => {
+              setLatHandler(parseFloat(position.coords.latitude));
+              setLngHandler(parseFloat(position.coords.longitude));
+              setIsMarkerShownHandler(true);
+            }
+          );
+          Geocode.fromLatLng(lat, lng).then(
+            response => {
+              let address = response.results[0].formatted_address.split(',');
+              let stateAndZip = address[2].trim().split(' ');
+              addressHandler(address[0].trim(), address[1].trim(), stateAndZip[0], stateAndZip[1]);
+            },
+            error => {
+              console.log(error);
+            }
+          );
+        } else {
+          error => console.log(error)
+        }
+    }
 
     const createEventHandler = async() => {
         let jsonBody = {
@@ -30,6 +102,13 @@ const CreateEventContent = (props) => {
             "event_type": eventType
           }
           let data = await createEvents(jsonBody);
+          addLocationHandler();
+          console.log(data);
+          // TODO: navigate the just created event page
+    }
+
+    const addLocationHandler = async() => {
+          let data = await addLocation(location_name, address.location_address, address.location_city, address.location_state, address.location_zip, lat, lng);
           console.log(data);
           // TODO: navigate the just created event page
     }
@@ -69,6 +148,10 @@ const CreateEventContent = (props) => {
     const setCategoryHandler = category=>{
         setCategory(category);
     }
+
+    useEffect(() => {
+        showCurrentLocation();
+    });
 
     // TODO: create dropdown window dynamically using api calls
     return (
@@ -126,11 +209,17 @@ const CreateEventContent = (props) => {
                     Event Type:
                     <input onBlur= { e => eventTypeHandler(e.target.value)} />
                 </div>
+                <div className="input">
+                    Location Description:
+                    <input onBlur= { e => setLocation_nameHandler(e.target.value)} />
+                    <Map isMarkerShown={isMarkerShown} currentLocation={{lat: lat, lng: lng}}/>
+                </div>
                 <button className="submit" onClick={()=>createEventHandler()}> SUBMIT </button>
             </div>
         </div>
     );
 }
+
 
 export default CreateEventContent;
 
