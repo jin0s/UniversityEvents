@@ -103,27 +103,27 @@ export const create_rso = async (admin_id, user_id1, user_id2, user_id3, user_id
     }
 }
 
-export const getAdminById = async (user_id) => { 
-    try{
+export const getAdminById = async (user_id) => {
+    try {
         let response = await fetch('/api/getAdminById', {
             method: 'POST',
-            body: JSON.stringify({user_id: user_id}),
+            body: JSON.stringify({ user_id: user_id }),
             headers: {
-              'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             }
         })
-        return response.text().then(function(text) {
-            console.log("getSuperAdminById response",text);
+        return response.text().then(function (text) {
+            console.log("getSuperAdminById response", text);
             return text ? JSON.parse(text) : {}
-        })      
+        })
     }
-    catch(e){
+    catch (e) {
         console.log(e);
-    } 
+    }
 }
 
-export const getSuperAdminById = async (user_id) => { 
-    try{
+export const getSuperAdminById = async (user_id) => {
+    try {
         let response = await fetch('/api/getSuperAdminById', {
             method: 'POST',
             body: JSON.stringify({ user_id: user_id }),
@@ -156,9 +156,9 @@ export const createUniversities = async (formData) => {
         console.log(e);
     }
 }
-    
-export const createEvents = async (formData) => { 
-    try{
+
+export const createEvents = async (formData) => {
+    try {
         const response = await fetch('/api/create_event', {
             method: 'POST',
             headers: {
@@ -169,9 +169,9 @@ export const createEvents = async (formData) => {
         const body = await response.text();
         return body;
     }
-    catch(e){
+    catch (e) {
         console.log(e);
-    } 
+    }
 }
 
 export const getUserById = async (id) => {
@@ -191,19 +191,19 @@ export const getUserById = async (id) => {
     }
 }
 
-export const getEventByID = async (event_id) => { 
-    try{
+export const getEventByID = async (event_id) => {
+    try {
         const response = await fetch('/api/events?id=' + event_id);
         const body = await response.json();
         if (response.status !== 200) throw Error(body.message);
         return body;
-    } catch(e){
+    } catch (e) {
         console.log(e);
-    } 
+    }
 }
 
-export const getUniversityIdByUserId = async (id) => { 
-    try{
+export const getUniversityIdByUserId = async (id) => {
+    try {
         let response = await fetch(`/api/getUniversityIdByUserId/?user_id=${id}`, {
             method: 'GET',
             headers: {
@@ -220,12 +220,12 @@ export const getUniversityIdByUserId = async (id) => {
 }
 
 // Catch empty JSON object
-export const getAllEventsByType = async (username, event_type) => { 
-    try{
+export const getAllEventsByType = async (username, event_type) => {
+    try {
         const postBody = {
             "username": username,
             "event_type": event_type
-          }
+        }
 
         const response = await fetch('/api/events', {
             method: 'POST',
@@ -236,15 +236,15 @@ export const getAllEventsByType = async (username, event_type) => {
         })
         const body = await response.json();
         console.log("in apiCalls: " + body.results);
-        return body.results[0];
+        return (event_type === 'public') ? body.results : body.results[0];
     }
-    catch(e){
-            console.log(e);
-        } 
+    catch (e) {
+        console.log(e);
     }
-    
-export const getUniversityIdByName = async (name) => { 
-    try{
+}
+
+export const getUniversityIdByName = async (name) => {
+    try {
         let response = await fetch(`/api/getUniversityIdByName/?name=${name}`, {
             method: 'GET',
             headers: {
@@ -271,6 +271,77 @@ export const studentOf = async (user_id, university_id) => {
         })
         return response.text().then(function (text) {
             console.log("StudentOf response", text);
+            return text ? JSON.parse(text) : {}
+        })
+        //return data;        
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+export const getCommentsByEventId = async (id) => {
+    try {
+        let response = await fetch(`/api/comment/?event_id=${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function (text) {
+            return text ? JSON.parse(text) : {}
+        })
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+export const addComment = async (user_id, event_id, description, rating) => {
+    try {
+        let response = await fetch('/api/comment', {
+            method: 'POST',
+            body: JSON.stringify({
+                user_id: user_id,
+                event_id: event_id,
+                description: description,
+                rating: rating
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function (text) {
+            console.log("addComment response", text);
+            return text ? JSON.parse(text) : {}
+        })
+        //return data;        
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+
+export const addLocation = async (location_name,location_address,location_city,location_state,location_zip,location_lat,location_long) => {
+    try {
+        let response = await fetch('/api/comment', {
+            method: 'POST',
+            body: JSON.stringify({
+                location_name : location_name,
+                location_address : location_address,
+                location_city : location_city,
+                location_state : location_state,
+                location_zip : location_zip,
+                location_lat : location_lat,
+                location_long : location_long
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function (text) {
+            console.log("addComment response", text);
             return text ? JSON.parse(text) : {}
         })
         //return data;        
