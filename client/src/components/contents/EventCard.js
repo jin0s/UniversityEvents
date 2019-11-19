@@ -1,15 +1,12 @@
 import React, { Component, useState, useEffect} from 'react';
 // import {deletePost, addComment, grabAllComments} from '../../utils/apiCalls';
 import Comment from './Comment';
-import LikeButton from '@material-ui/icons/FavoriteBorder';
-import CommentButton from '@material-ui/icons/Comment';
+// import LikeButton from '@material-ui/core/icons/FavoriteBorder';
+// import CommentButton from '@material-ui/core/icons/Comment';
 import styles from '../../styles/styles';
-import IconButton from '@material-ui/core/IconButton';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Badge from '@material-ui/core/Badge';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import {withStyles} from '@material-ui/core/styles';
+import { IconButton, TextField, Badge } from '@material-ui/core';
 import { Card, CardImg, CardText, CardBody,CardTitle, CardSubtitle, Button } from 'reactstrap';
 
 

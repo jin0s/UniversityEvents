@@ -34,10 +34,6 @@ const CreateEventContent = (props) => {
           // TODO: navigate the just created event page
     }
 
-    const eventCategoryHandler = category=>{
-        setCategory(category);
-    }
-
     const nameHandler = name=>{
         setName(name);
     }
@@ -70,20 +66,33 @@ const CreateEventContent = (props) => {
         setEventType(eventType);
     }
 
+    const setCategoryHandler = category=>{
+        setCategory(category);
+    }
+
     // TODO: create dropdown window dynamically using api calls
     return (
         <div className="createEventContainer">
             <div id="signUp">
                 <div className="input">
                     Event Category: 
-                    {/* <select>
-                        <option value="1">Social</option>
-                        <option value="2">Fundraiser</option>
-                        <option selected value="3">Informational</option>
-                        <option value="4">General Body Meeting</option>
-                        <option value="5">Networking</option>
-                    </select> */}
-                    <input onBlur={ e => eventCategoryHandler(e.target.value)}/>
+                    <select value={category} onChange={ e => setCategoryHandler(e.target.value)}>
+                        <option value="1">
+                            Social
+                        </option>
+                        <option value="2">
+                            Fundraiser
+                        </option>
+                        <option value="3">
+                            Informational
+                        </option>
+                        <option value="4">
+                            General Body Meeting
+                        </option>
+                        <option value="5">
+                            Networking
+                        </option>
+                    </select>
                 </div>
                 <div className="input">
                     Name: 

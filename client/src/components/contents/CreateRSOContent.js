@@ -32,9 +32,9 @@ const CreateRSOContent = (props) => {
         setName(name);
     }
 
-    const setListOpenHandler = ()=>{
-        setListOpen(!listOpen);
-    }
+    // const setListOpenHandler = ()=>{
+    //     setListOpen(!listOpen);
+    // }
 
     const listItems = selectedMembers.map((member, index) =>
         <li key={index} value={member.id}>
