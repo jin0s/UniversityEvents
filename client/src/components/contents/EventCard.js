@@ -23,12 +23,12 @@ const EventCard = (props) => {
     const [rating,setRating] = useState(0);
     const {classes} = props;
 
-
     const likeHandler = async(data) => {
     }
     
-    const ratingHandler = async(data) => {
+    const ratingHandler = (data) => {
         setRating(data);
+        console.log("rating: " + data);
     }
 
     const commentsHandler = async() => {
@@ -113,6 +113,7 @@ const EventCard = (props) => {
                                                 <Comment    key={value.id} 
                                                             id={value.id} 
                                                             name={value.user_id}
+                                                            rating={value.rating}
                                                             time_created={value.timestamp}
                                                             username={value.user_id}  
                                                             content={value.description}
@@ -135,18 +136,14 @@ const EventCard = (props) => {
                         /> 
                         <div className='rating' >
                             <Ratings
-                                rating={this.state.rating}
+                                rating={rating}
                                 widgetRatedColors="blue"
-                                changeRating={this.changeRating}
+                                changeRating= {ratingHandler}
                             >
                                 <Ratings.Widget />
                                 <Ratings.Widget />
-                                <Ratings.Widget
-                                widgetDimension="60px"
-                                svgIconViewBox="0 0 5 5"
-                                svgIconPath="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z"
-                                />
-                                <Ratings.Widget widgetHoverColor="black" />
+                                <Ratings.Widget />
+                                <Ratings.Widget />
                                 <Ratings.Widget />
                             </Ratings>
                         </div>

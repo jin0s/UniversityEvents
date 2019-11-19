@@ -35,7 +35,7 @@ const Comment = (props) => {
                     <h6 className="mt-0 mb-1 text-muted">{props.username + " says:"}</h6>
                     {props.content}
                     <h6 className="mt-0 mb-1 text-muted">{"rating: "}</h6>
-                    {props.rating}
+                    {props.rating} stars
                 </div>
             </div>
         </div>
