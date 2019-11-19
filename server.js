@@ -356,12 +356,11 @@ app.post('/api/change_admins', async (req, res) => {
   try {
     var conn = pool.promise();
     const values = [req.body.user_id, req.body.admin_id] 
+    console.log("incomeing values " + values);
     var query_str = 
-      " UPDATE UniversityEvents.Admins \
-        SET user_id = ? \
-        WHERE user_id = ? ";
+      "UPDATE UniversityEvents.Admins SET user_id = ? WHERE user_id = ? ";
     var [results] =  await conn.query(query_str, values);
-    return res.json({status: 0})
+    return res.json({status: 0});
   } 
   catch (e) {
     console.error(e);
@@ -494,7 +493,7 @@ app.post('/api/comment', async (req, res) => {
   }
 });
 
-// Get RSO by ID
+
 app.get('/api/comment', async (req, res) => {
   try {
     var conn = pool.promise();
@@ -564,6 +563,65 @@ app.post('/api/eventsbylocation', async (req, res) => {
     return res.json({status: 'ERRORED'});
   }
 });
+
+app.get('/api/managerso', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const id = req.query.admin_id;
+    var query_str =
+      "SELECT id, name FROM UniversityEvents.RSOs WHERE user_id = ?";
+    var [results] =  await conn.query(query_str, id);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+app.get('/api/members', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const values = [req.query.rso_id, req.query.user_id];
+    var query_str =
+      "SELECT user_id FROM UniversityEvents.Member WHERE rso_id = ? AND user_id <> ?";
+    var [results] =  await conn.query(query_str, values);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+app.get('/api/approve_events', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const values = [req.query.user_id];
+    var query_str = "SELECT \
+                       e.id \
+                      ,e.event_type_id \
+                      ,e.name \
+                      ,e.datetime \
+                      ,e.description \
+                      ,e.contact_phone \
+                      ,e.contact_email \
+                      FROM UniversityEvents.Create_Public cp \
+                    INNER JOIN UniversityEvents.Events e \
+                      ON e.id = cp.event_id \
+                      AND cp.super_admin_id = ? \
+                      AND cp.approved = 1"
+    var [results] =  await conn.query(query_str, values);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+
+
 /***************************** END OF ROUTING ********************************/
 
 

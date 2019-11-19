@@ -423,3 +423,73 @@ export const getEventsByLocation = async (user_id,location_name) => {
         console.log(e);
     }
 }
+
+export const getRSOListForAdmin = async (id) => {
+    try {
+        let response = await fetch(`/api/managerso?admin_id=${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const body = await response.json();
+        return body;
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+
+export const getMemberByRSOID = async (id, user_id) => {
+    try {
+        let response = await fetch(`/api/members?rso_id=${id}&user_id=${user_id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const body = await response.json();
+        return body;
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+
+export const changeAdmin = async (user_id,admin_id) => {
+    try {
+        let response = await fetch('/api/change_admins', {
+            method: 'POST',
+            body: JSON.stringify({
+                user_id : user_id,
+                admin_id : admin_id
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const body = await response.json();
+        return body;       
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+export const getApproveEvents = async (superadmin_id) => {
+    try {
+        let response = await fetch(`/api/approve_events?user_id=${superadmin_id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const body = await response.json();
+        return body;       
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
