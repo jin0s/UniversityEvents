@@ -325,7 +325,7 @@ export const addComment = async (user_id, event_id, description, rating) => {
 
 export const addLocation = async (location_name,location_address,location_city,location_state,location_zip,location_lat,location_long) => {
     try {
-        let response = await fetch('/api/comment', {
+        let response = await fetch('/api/location', {
             method: 'POST',
             body: JSON.stringify({
                 location_name : location_name,
@@ -340,11 +340,8 @@ export const addLocation = async (location_name,location_address,location_city,l
                 'Content-Type': 'application/json'
             }
         })
-        return response.text().then(function (text) {
-            console.log("addComment response", text);
-            return text ? JSON.parse(text) : {}
-        })
-        //return data;        
+        const body = await response.json();
+        return body;  
     }
     catch (e) {
         console.log(e);

@@ -62,7 +62,6 @@ const CreateEventContent = ({ options, onMount, className }) => {
                 location_zip: location_zip,
             }
         ]);
-        
     }
 
     const showCurrentLocation = () => {
@@ -108,9 +107,9 @@ const CreateEventContent = ({ options, onMount, className }) => {
     }
 
     const addLocationHandler = async() => {
-          let data = await addLocation(location_name, address.location_address, address.location_city, address.location_state, address.location_zip, lat, lng);
-          console.log(data);
-          // TODO: navigate the just created event page
+        let data = await addLocation(location_name, address[0].location_address, address[0].location_city, address[0].location_state, address[0].location_zip, lat, lng);
+        console.log(data);
+        // TODO: navigate the just created event page
     }
 
     const nameHandler = name=>{

@@ -511,9 +511,6 @@ app.get('/api/comment', async (req, res) => {
   }
 });
 
-
-
-
 app.post('/api/location', async (req, res) => {
   try {
     var conn = pool.promise();
