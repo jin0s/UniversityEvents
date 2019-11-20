@@ -610,7 +610,7 @@ app.get('/api/approve_events', async (req, res) => {
                     INNER JOIN UniversityEvents.Events e \
                       ON e.id = cp.event_id \
                       AND cp.super_admin_id = ? \
-                      AND cp.approved = 1"
+                      AND cp.approved = 0"
     var [results] =  await conn.query(query_str, values);
     return res.json(results);
   } 
@@ -621,6 +621,22 @@ app.get('/api/approve_events', async (req, res) => {
 });
 
 
+// Manage Events
+app.post('/api/manage_events', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const values = [req.body.approved, req.body.event_id] 
+    console.log("incomeing values " + values);
+    var query_str = 
+      "UPDATE UniversityEvents.Create_Public SET approved = ? WHERE event_id = ? ";
+    var [results] =  await conn.query(query_str, values);
+    return res.json({status: 0});
+  } 
+  catch (e) {
+    console.error(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
 
 /***************************** END OF ROUTING ********************************/
 

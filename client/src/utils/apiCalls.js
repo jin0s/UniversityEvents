@@ -493,3 +493,23 @@ export const getApproveEvents = async (superadmin_id) => {
         console.log(e);
     }
 }
+
+export const manageEvents = async (approved,event_id) => {
+    try {
+        let response = await fetch('/api/manage_events', {
+            method: 'POST',
+            body: JSON.stringify({
+                approved : approved,
+                event_id : event_id
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const body = await response.json();
+        return body;       
+    }
+    catch (e) {
+        console.log(e);
+    }
+}

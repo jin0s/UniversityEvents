@@ -13,16 +13,11 @@ import './Card.css';
 const EventCard = (props) => {
     const [commentBeingAdded,setCommentBeingAdded] = useState('');
     const [comments,setComments] = useState([]);
-    const [likes,setLikes] = useState(props.num_likes); //useState(Math.floor(Math.random()*5)+1);
     const [rating,setRating] = useState(0);
     const {classes} = props;
 
-    const likeHandler = async(data) => {
-    }
-    
     const ratingHandler = (data) => {
         setRating(data);
-        console.log("rating: " + data);
     }
 
     const commentsHandler = async() => {
@@ -85,17 +80,11 @@ const EventCard = (props) => {
                 <CardBody className='cardBody'>
                     <CardTitle className='cardTitle' tag="h1"> 
                         {props.name}
-                        <Button close onClick={deleteHandler}/>
                     </CardTitle>
                     <CardText className='cardText' tag="p">
                         {props.description}
                     </CardText>
-                    <small className="float-right text-muted">{props.start_time}</small>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={likes} onClick={likeHandler} color="secondary">
-                            <FavoriteIcon />
-                        </Badge>
-                    </IconButton>
+                    <small className="float-right text-muted">{props.datetime}</small>
             
                     <ToggleContent
                         toggle={show => <IconButton onClick={show}><CommentButton/></IconButton>}

@@ -1,16 +1,16 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { getAllEventsByType, getCommentsByEventId } from '../../utils/apiCalls';
+import { getApproveEvents } from '../../utils/apiCalls';
 import PublicEventsCard from '../cards/PublicEventsCard';
 
 const ManageEventsContent = (props) => {
   const[events, setEvents] = useState([]);
   const[eventType, setEventType] = useState();
 
-  let username = localStorage.getItem('username');
+  let super_user_id = localStorage.getItem('super_admin_id');
+  console.log("super_user_id: " + super_user_id);
 
-  const eventsHandler = async(event_type) => {
-      let result =  await getAllEventsByType(username, event_type) 
-      console.log(result);
+  const eventsHandler = async() => {
+      let result =  await getApproveEvents(super_user_id) 
       console.log('fetching events', result);
       setEvents(result);
   }
@@ -22,20 +22,17 @@ const ManageEventsContent = (props) => {
 }
   
     useEffect(()=>{//This will be executed always after the components have been rendered
-        eventsHandler("public");
+        eventsHandler();
     },[]);
 
     return (
-        <div className='Events'>DISCOVER SOME EVENTS                    
-            <select value={eventType} onChange={ e=> setEventTypeHandler(e.target.value)}>
-                <option value="public">Public Events</option>
-                <option value="private">Private Events</option>
-                <option value="rso">RSO Events</option>
-            </select>
+        <div className='Events'>
+            <h1 style={{marginBottom: '2%'}}>Manage Events</h1>            
                 {
                     events.map((value) => {
                         return (
-                            <EventCard  key={value.id} 
+                            <PublicEventsCard
+                                        key={value.id} 
                                         id={value.id} 
                                         datetime={value.datetime}
                                         description={value.description}
@@ -43,8 +40,6 @@ const ManageEventsContent = (props) => {
                                         contact_phone={value.contact_phone}
                                         contact_email={value.contact_email}
                                         event_type={value.event_type}
-                                        username={localStorage.getItem('username')}
-                                        RSO_id={value.RSO_id}  
                             />
                         );
                     })
