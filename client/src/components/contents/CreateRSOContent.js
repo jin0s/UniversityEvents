@@ -26,7 +26,7 @@ const CreateRSOContent = (props) => {
                 id: id
             }
         ]);
-        
+        console.log(selectedMembers);
     }
     const NameHandler = name=>{
         setName(name);
@@ -59,15 +59,15 @@ const CreateRSOContent = (props) => {
         // }
 
         console.log("admin: " + admin);
-        console.log("selectedMembers[0].id: " + selectedMembers[0].id);
-        console.log("selectedMembers[1].id: " + selectedMembers[1].id);
-        console.log("selectedMembers[2].id: " + selectedMembers[2].id);
-        console.log("selectedMembers[3].id: " + selectedMembers[3].id);
+        console.log("selectedMembers[0].id: " + selectedMembers[1].id);
+        console.log("selectedMembers[1].id: " + selectedMembers[2].id);
+        console.log("selectedMembers[2].id: " + selectedMembers[3].id);
+        console.log("selectedMembers[3].id: " + selectedMembers[4].id);
         console.log("RSO name " + name);
         console.log("university_id " + university_id);
 
-        let createRSOData = await create_rso(admin, selectedMembers[0].id, selectedMembers[1].id, 
-            selectedMembers[2].id, selectedMembers[3].id, name, university_id);
+        let createRSOData = await create_rso(admin, selectedMembers[1].id, selectedMembers[2].id, 
+            selectedMembers[3].id, selectedMembers[4].id, name, university_id);
 
         if (createRSOData.status === 0) {
             console.log("Create RSO was successful");
