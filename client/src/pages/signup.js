@@ -35,15 +35,20 @@ export default props => {
     const signUpHandler = async() => {
         if(password !== confPassword){ //If passwords don't match then dont make the api call
             alert("Your passwords don't match, please try again.");
-        } 
+            return;
+        } else if (password.length < 4){
+            alert("Your passwords must be atleast 4 characters long");
+            return;
+        }
         let data = await signUp(username,password,name);
         let universityData = await getUniversityIdByName(university);
-        studentOfHandler(username, universityData[0].id)
         if (selectedUserLevel === 'super_admin') {
             let super_admin_data = await assign_super_admins(username);
             if (super_admin_data.status !== 0) {
                 alert(data.error);
             }
+        } else {
+            studentOfHandler(username, universityData[0].id)
         }
         if(data.status === 0 && universityData.length !== 0){
             console.log("Sign up was successful");

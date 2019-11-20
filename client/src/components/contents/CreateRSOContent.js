@@ -7,6 +7,11 @@ import './CreateRSOContent.css';
 const CreateRSOContent = (props) => {
 
     const [selectedMembers, setselectedMembers] = useState([]);
+    const [selectedMembers1, setselectedMembers1] = useState();
+    const [selectedMembers2, setselectedMembers2] = useState();
+    const [selectedMembers3, setselectedMembers3] = useState();
+    const [selectedMembers4, setselectedMembers4] = useState();
+
     const [name, setName] = useState('');
     const [admin, setAdmin] = useState('');
     const[listOpen, setListOpen] = useState(false);
@@ -28,6 +33,25 @@ const CreateRSOContent = (props) => {
         ]);
         
     }
+
+    const setselectedMembersHandler1 = name=>{
+        checkUserExists(name)
+        setselectedMembers1(name);
+    }
+
+    const setselectedMembersHandler2 = name=>{
+        checkUserExists(name)
+        setselectedMembers2(name);
+    }
+    const setselectedMembersHandler3 = name=>{
+        checkUserExists(name)
+        setselectedMembers3(name);
+    }
+    const setselectedMembersHandler4 = name=>{
+        checkUserExists(name)
+        setselectedMembers4(name);
+    }
+
     const NameHandler = name=>{
         setName(name);
     }
@@ -59,20 +83,20 @@ const CreateRSOContent = (props) => {
         // }
 
         console.log("admin: " + admin);
-        console.log("selectedMembers[0].id: " + selectedMembers[0].id);
-        console.log("selectedMembers[1].id: " + selectedMembers[1].id);
-        console.log("selectedMembers[2].id: " + selectedMembers[2].id);
-        console.log("selectedMembers[3].id: " + selectedMembers[3].id);
+        console.log("selectedMembers[0].id: " + selectedMembers1);
+        console.log("selectedMembers[1].id: " + selectedMembers2);
+        console.log("selectedMembers[2].id: " + selectedMembers3);
+        console.log("selectedMembers[3].id: " + selectedMembers4);
         console.log("RSO name " + name);
         console.log("university_id " + university_id);
 
-        let createRSOData = await create_rso(admin, selectedMembers[0].id, selectedMembers[1].id, 
-            selectedMembers[2].id, selectedMembers[3].id, name, university_id);
+        let createRSOData = await create_rso(admin, selectedMembers1, selectedMembers2, 
+            selectedMembers3, selectedMembers4, name, university_id);
 
         if (createRSOData.status === 0) {
             console.log("Create RSO was successful");
         } else {
-            alert("Error creating rso");
+            // alert("Error creating rso");
         }
     }
 
@@ -91,7 +115,7 @@ const CreateRSOContent = (props) => {
                 <li>
                     <label>
                         Name:
-                        <input type='text'  onBlur = { e => NameHandler(e.target.value)}/>
+                        <input type='text'  onChange = { e => NameHandler(e.target.value)}/>
                     </label>
                 </li>
                 <li>
@@ -103,25 +127,25 @@ const CreateRSOContent = (props) => {
                 <li>
                     <label>
                         Member 1:
-                        <input type='text' onBlur = { e => selectedMembersHandler(e.target.value)}/>
+                        <input type='text' onBlur = { e => setselectedMembersHandler1(e.target.value)}/>
                     </label>
                 </li>
                 <li>
                     <label>
                         Member 2:
-                        <input type='text' onBlur = { e => selectedMembersHandler(e.target.value)}/>
+                        <input type='text' onBlur = { e => setselectedMembersHandler2(e.target.value)}/>
                     </label>
                 </li>
                 <li>
                     <label>
                         Member 3:
-                        <input type='text' onBlur = { e => selectedMembersHandler(e.target.value)}/>
+                        <input type='text' onBlur = { e => setselectedMembersHandler3(e.target.value)}/>
                     </label>
                 </li>
                 <li>
                     <label>
                         Member 4:
-                        <input type='text'onBlur = { e => selectedMembersHandler(e.target.value)}/>
+                        <input type='text'onBlur = { e => setselectedMembersHandler4(e.target.value)}/>
                     </label>
                 </li>
                 

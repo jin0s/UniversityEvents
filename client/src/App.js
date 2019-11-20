@@ -42,6 +42,8 @@ class App extends Component {
         localStorage.setItem('admin', this.state.username);
       }
       this.props.history.push("/home");
+    } else {
+      alert("Incorrect Password!");
     }
     let universityData = await getUniversityIdByUserId(username);
     if (universityData.length !== 0) {

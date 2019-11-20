@@ -214,6 +214,9 @@ const CreateEventContent = ({ options, onMount, className }) => {
                       
                         Event Type:
                         <select value={eventType} onChange={ e => eventTypeHandler(e.target.value)}>
+                            <option value="">
+                                
+                            </option>
                             <option value="public">
                                 Public Event
                             </option>

@@ -4,6 +4,8 @@ var app = express();
 const env = require('dotenv');
 const helpers = require("./helper.js");
 const multer = require('multer');
+const sha256 = require('js-sha256');
+
 // const bodyParser = require('body-parser');
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -131,7 +133,7 @@ app.post('/api/login', async (req, res) => {
           id = ? ";
     var [results] =  await conn.query(query_str, values);
     return res.json({
-      status: checkPassword(req.body.inputPassword, results[0].password)
+      status: checkPassword(sha256(req.body.inputPassword), results[0].password)
     })
   } 
   catch (e) {
@@ -160,7 +162,8 @@ app.post('/api/signup', async (req, res) => {
   /*********  Queury Paramenters *********/
   try {
     var conn = pool.promise();
-    const values = [req.body.username, req.body.password, req.body.name];
+    hashpass = sha256(req.body.password);
+    const values = [req.body.username, hashpass, req.body.name];
     var query_str = 
       " INSERT INTO UniversityEvents.Users VALUES (?, ?, ?)";
     var [results] =  await conn.query(query_str, values);
