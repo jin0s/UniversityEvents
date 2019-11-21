@@ -218,6 +218,23 @@ export const getUniversityIdByUserId = async (id) => {
     }
 }
 
+export const getUniOptionsList = async () => {
+    try {
+        let response = await fetch(`/api/universities`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const body = response.json();
+        return body;
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+
 // Catch empty JSON object
 export const getAllEventsByType = async (username, event_type) => {
     try {

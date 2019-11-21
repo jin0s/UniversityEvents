@@ -1,8 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './signup.css';
 import HomeButton from '../components/buttons/homeButton';
-import { assign_super_admins, getUniversityIdByName, signUp, studentOf } from '../utils/apiCalls'
+import { assign_super_admins, getUniversityIdByName, signUp, studentOf, getUniOptionsList } from '../utils/apiCalls'
 import { display } from '@material-ui/system';
 
 export default props => {
@@ -10,8 +10,16 @@ export default props => {
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
     const [university,setUniversity] = useState('');
+    const [uniOptions, setUniOptions] = useState([]);
+
     const [confPassword,setConfPassword] = useState('');
     const [name,setName] = useState('');
+
+    const getUniOptions = async() => {
+        let result =  await getUniOptionsList();
+        setUniOptions(result);
+        console.log('fetching avaiable universities: ', result);
+      }
 
     const usernameHandler = username=>{
         setUsername(username);
@@ -20,6 +28,7 @@ export default props => {
         setPassword(password);
     }
     const universityHandler = university=>{
+        console.log(university);
         setUniversity(university);
     }
     const confPasswordHandler = confPassword=>{
@@ -39,13 +48,16 @@ export default props => {
         } else if (password.length < 4){
             alert("Your passwords must be atleast 4 characters long");
             return;
+        } else if (university === undefined || university === "") {
+            alert("Please select a university");
+            return;
         }
         let data = await signUp(username,password,name);
         let universityData = await getUniversityIdByName(university);
         if (selectedUserLevel === 'super_admin') {
             let super_admin_data = await assign_super_admins(username);
             if (super_admin_data.status !== 0) {
-                alert(data.error);
+                alert("That user account is already taken!");
             }
         } else {
             studentOfHandler(username, universityData[0].id)
@@ -56,7 +68,7 @@ export default props => {
         } else if (universityData.length === 0) {
             alert(university + " not found");
         } else {
-            alert(data.error);
+            alert("That user account is already taken!");
         }
     }
     
@@ -66,6 +78,12 @@ export default props => {
             alert(data.error);
         }
     }
+
+    useEffect(()=>{//This will be executed always after the components have been rendered
+        getUniOptions();
+    },[]);
+
+
     return (
     <div className="AppSignUp">
         <div id="signUp">
@@ -103,7 +121,10 @@ export default props => {
                 ? (
                     <div id="name_signUp">
                         University: 
-                        <input onBlur= { e => universityHandler(e.target.value)}/>
+                        <select value={university} onChange={ e=> universityHandler(e.target.value)}>
+                            <option value="">Please Select A University</option>
+                            {uniOptions.map((value) => <option key={value.id} value={value.name}>{value.name}</option>)}
+                        </select>
                     </div>
                 ):
                 (

@@ -119,6 +119,20 @@ app.get('/api/getUniversityIdByName', async (req, res) => {
   }
 });
 
+app.get('/api/universities', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    var query_str =
+      "SELECT id, name FROM UniversityEvents.Universities";
+    var [results] =  await conn.query(query_str);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
 app.post('/api/login', async (req, res) => {
   /*********  Queury Paramenters *********/
   try {
