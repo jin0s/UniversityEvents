@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CreateRSOContent.css';
-import { createEvents, addLocation } from '../../utils/apiCalls';
+import { createEvents, addLocation, getRSOListForAdmin } from '../../utils/apiCalls';
 import Geocode from "react-geocode";
 import Map from '../maps/Map';
 
@@ -22,6 +22,7 @@ const CreateEventContent = ({ options, onMount, className }) => {
     const [address, setAddress] = useState([]);
     const [location_name, setLocation_name] = useState([]);
     const [isMarkerShown, setIsMarkerShown] = useState('');
+    const [rsoOption, setRsoOption] = useState([]);
     let super_user_id = localStorage.getItem('super_admin_id');
     let admin = localStorage.getItem('admin');
 
@@ -30,6 +31,12 @@ const CreateEventContent = ({ options, onMount, className }) => {
     const setLatHandler = lat => {
         setLat(lat);
     }
+
+    const getrsoOptions = async(user_id) => {
+        let result =  await getRSOListForAdmin(user_id);
+        console.log('fetching avaiable rso: ', result);
+        setRsoOption(result);
+      }
 
     const setLngHandler = lng => {
         setLng(lng);
@@ -128,6 +135,7 @@ const CreateEventContent = ({ options, onMount, className }) => {
     }
 
     const rsoHandler = rso=>{
+        console.log(rso);
         setRSO(rso);
     }
 
@@ -139,9 +147,11 @@ const CreateEventContent = ({ options, onMount, className }) => {
         setCategory(category);
     }
 
-    useEffect(() => {
-        showCurrentLocation();
-    });
+    useEffect(()=>{//This will be executed always after the components have been rendered
+        getrsoOptions(admin);
+      },[]);
+
+    showCurrentLocation();
 
     // TODO: create dropdown window dynamically using api calls
     return (
@@ -149,6 +159,7 @@ const CreateEventContent = ({ options, onMount, className }) => {
             <div className="dropdown">
                     Event Category: 
                     <select value={category} onChange={ e => setCategoryHandler(e.target.value)}>
+                        <option value=""></option>
                         <option value="1">
                             Social
                         </option>
@@ -205,13 +216,6 @@ const CreateEventContent = ({ options, onMount, className }) => {
                 </li>
                 <li>
                     <label>
-                        RSO:
-                        <input type='text' onBlur = { e => rsoHandler(e.target.value)}/>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                      
                         Event Type:
                         <select value={eventType} onChange={ e => eventTypeHandler(e.target.value)}>
                             <option value="">
@@ -226,6 +230,15 @@ const CreateEventContent = ({ options, onMount, className }) => {
                             <option value="rso">
                                 Register Student Org Event
                             </option>
+                        </select>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        RSO:
+                        <select value={rso} onChange={ e=> rsoHandler(e.target.value)}> 
+                            <option value=""></option>
+                            {rsoOption.map((value) => <option key={value.id} value={value.id}>{value.name}</option>)}
                         </select>
                     </label>
                 </li>

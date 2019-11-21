@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { get_user_rso } from '../../utils/apiCalls';
+import { getUserRSO } from '../../utils/apiCalls';
 import './CreateRSOContent.css';
 import RSO from '../cards/RSO';
 
@@ -10,7 +10,7 @@ const JoinRSOContent = (props) => {
     const[rsos, setRsos] = useState([]);
 
     const RSOHandler = async() => {
-        let result =  await get_user_rso(user_id);
+        let result =  await getUserRSO(user_id);
         console.log('fetching RSOs', result[0]);
         setRsos(result[0]);
     }

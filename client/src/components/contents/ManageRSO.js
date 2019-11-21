@@ -39,9 +39,15 @@ const ManageRSO = (props) => {
     const changeAdminHandler = async() => {
         let data = await changeAdmin(user, username);
         console.log(data);
-        localStorage.removeItem('super_admin_id');
-        localStorage.removeItem('admin');
-        window.location.reload();
+        if(data.status === "ERRORED") {
+          alert("That user is already any admin, we cannot him an admin");
+          window.location.reload();
+        } else {
+          localStorage.removeItem('super_admin_id');
+          localStorage.removeItem('admin');
+          window.location.reload();
+        }
+          
         
   }
 
@@ -56,7 +62,7 @@ const ManageRSO = (props) => {
             <select value={rso} onChange={ e=> setRSOHandler(e.target.value)}> 
                 {rsoOption.map((value) => <option key={value.id} value={value.id}>{value.name}</option>)}
             </select>
-            <select value={user} onChange={ e=> setUserHandler(e.target.value)}> 
+            <select value={user} onBlur={ e=> setUserHandler(e.target.value)}>
                 {userOption.map((value) => <option key={value.user_id} value={value.user_id}>{value.user_id}</option>)}
             </select>
             <button className="submit" onClick={()=>changeAdminHandler()}> SUBMIT </button>

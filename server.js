@@ -359,7 +359,7 @@ app.post('/api/change_admins', async (req, res) => {
   try {
     var conn = pool.promise();
     const values = [req.body.user_id, req.body.admin_id] 
-    console.log("incomeing values " + values);
+    console.log("incomeing values " + req.body.user_id + " " + req.body.admin_id);
     var query_str = 
       "UPDATE UniversityEvents.Admins SET user_id = ? WHERE user_id = ? ";
     var [results] =  await conn.query(query_str, values);

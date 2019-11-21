@@ -167,6 +167,7 @@ export const createEvents = async (formData) => {
             body: JSON.stringify(formData)
         })
         const body = await response.text();
+        console.log(body);
         return body;
     }
     catch (e) {
@@ -297,9 +298,26 @@ export const getCommentsByEventId = async (id) => {
     }
 }
 
-export const get_user_rso = async (id) => {
+export const getUserRSO = async (id) => {
     try {
         let response = await fetch(`/api/user_rso/?user_id=${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        return response.text().then(function (text) {
+            return text ? JSON.parse(text) : {}
+        })
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+export const getAdminRSO = async (id) => {
+    try {
+        let response = await fetch(`/api/admin_rso/?admin_id=${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -409,8 +427,8 @@ export const getEventsByLocation = async (user_id,location_name) => {
         let response = await fetch('/api/eventsbylocation', {
             method: 'POST',
             body: JSON.stringify({
-                user_id : user_id,
-                location_name : location_name
+                "user_id" : user_id,
+                "location_name" : location_name
             }),
             headers: {
                 'Content-Type': 'application/json'
@@ -463,8 +481,8 @@ export const changeAdmin = async (user_id,admin_id) => {
         let response = await fetch('/api/change_admins', {
             method: 'POST',
             body: JSON.stringify({
-                user_id : user_id,
-                admin_id : admin_id
+                "user_id" : user_id,
+                "admin_id" : admin_id
             }),
             headers: {
                 'Content-Type': 'application/json'
