@@ -31,7 +31,7 @@ const CreateRSOContent = (props) => {
                 id: id
             }
         ]);
-        
+        console.log(selectedMembers);
     }
 
     const setselectedMembersHandler1 = name=>{

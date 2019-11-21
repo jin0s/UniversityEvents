@@ -376,10 +376,15 @@ app.post('/api/create_universities', upload.single('pictures'), async (req, res)
   try {
     var conn = pool.promise();
     console.log("req.pictures: " + req.pictures)
-    const values = [req.body.super_user_id, req.body.name, 
+    var values = [req.body.super_user_id, req.body.name, 
       req.file.path, req.body.location_address, req.body.num_of_students];
     var query_str = 
       "INSERT INTO UniversityEvents.Universities (super_user_id, name, pictures, location_address, num_of_students) VALUES (?, ?, ?, ?, ?)";
+    var [results] =  await conn.query(query_str, values);
+    console.log(req.body.super_user_id, results.insertId);
+    values = [req.body.super_user_id, results.insertId]
+    query_str = 
+      "INSERT INTO UniversityEvents.StudentOf (user_id, university_id) VALUES (?, ?)";
     var [results] =  await conn.query(query_str, values);
     return res.json({status: 0})
   } 
@@ -613,7 +618,7 @@ app.get('/api/approve_events', async (req, res) => {
                     INNER JOIN UniversityEvents.Events e \
                       ON e.id = cp.event_id \
                       AND cp.super_admin_id = ? \
-                      AND cp.approved = 1"
+                      AND cp.approved = 0"
     var [results] =  await conn.query(query_str, values);
     return res.json(results);
   } 
@@ -624,6 +629,22 @@ app.get('/api/approve_events', async (req, res) => {
 });
 
 
+// Manage Events
+app.post('/api/manage_events', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const values = [req.body.approved, req.body.event_id] 
+    console.log("incomeing values " + values);
+    var query_str = 
+      "UPDATE UniversityEvents.Create_Public SET approved = ? WHERE event_id = ? ";
+    var [results] =  await conn.query(query_str, values);
+    return res.json({status: 0});
+  } 
+  catch (e) {
+    console.error(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
 
 /***************************** END OF ROUTING ********************************/
 

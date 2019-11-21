@@ -4,6 +4,7 @@ import CreateRSOContent from './CreateRSOContent';
 import JoinRSOContent from './JoinRSOContent';
 import EventsByLocation from './EventsByLocation';
 import ManageRSO from './ManageRSO';
+import ManageEventsContent from './ManageEventsContent';
 import './Content.css';
 import { UsersContext } from '../../context';
 import CreateEventContent from './CreateEventContent';
@@ -32,10 +33,11 @@ const Content = (props) => {
                 <JoinRSOContent />
                 : buttonClicked === 'manageRSO' ?
                 <ManageRSO />
-                : <div></div>
+                : buttonClicked === 'manageEvents' ?
+                <ManageEventsContent />
+                : null
                 }
         </div>
     );
 }
-
 export default Content;

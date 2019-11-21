@@ -53,7 +53,7 @@ const CreateUniversityContent = (props) => {
                 <li>
                     <label>
                         Pictures: 
-                        <input type="file" name="pictures" onBlur={ e => picturesHandler(e)} />
+                        <input type="file" name="pictures" onChange={ e => picturesHandler(e)} />
                     </label>    
                 </li>
                 <li>

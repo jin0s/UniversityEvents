@@ -76,21 +76,21 @@ export default props => {
                     <li>
                         <label>
                             <input
-                            type="radio"
-                            value="student"
-                            checked={selectedUserLevel === 'student'}
-                            onChange={ e => selectedUserLevelHandler(e.target.value)}
+                                type="radio"
+                                value="student"
+                                checked={selectedUserLevel === 'student'}
+                                onChange={ e => selectedUserLevelHandler(e.target.value)}
                             />
                             Student
                         </label>
                     </li>
-                    <li>
+                    <li> 
                         <label>
                             <input
-                            type="radio"
-                            value="super_admin"
-                            checked={selectedUserLevel === 'super_admin'}
-                            onChange={ e => selectedUserLevelHandler(e.target.value)}
+                                type="radio"
+                                value="super_admin"
+                                checked={selectedUserLevel === 'super_admin'}
+                                onChange={ e => selectedUserLevelHandler(e.target.value)}
                             />
                             Super Admin
                         </label>

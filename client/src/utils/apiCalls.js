@@ -148,9 +148,7 @@ export const createUniversities = async (formData) => {
             method: 'POST',
             body: formData
         })
-        return response.text().then(function (text) {
-            return text ? JSON.parse(text) : {}
-        })
+        return response;
     }
     catch (e) {
         console.log(e);
@@ -500,6 +498,26 @@ export const getApproveEvents = async (superadmin_id) => {
     try {
         let response = await fetch(`/api/approve_events?user_id=${superadmin_id}`, {
             method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const body = await response.json();
+        return body;       
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+export const manageEvents = async (approved,event_id) => {
+    try {
+        let response = await fetch('/api/manage_events', {
+            method: 'POST',
+            body: JSON.stringify({
+                approved : approved,
+                event_id : event_id
+            }),
             headers: {
                 'Content-Type': 'application/json'
             }
