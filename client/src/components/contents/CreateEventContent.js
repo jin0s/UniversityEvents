@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CreateRSOContent.css';
-import { createEvents, addLocation, getRSOListForAdmin } from '../../utils/apiCalls';
+import { createEvents, addLocation, getRSOListForAdmin, cleanEvent } from '../../utils/apiCalls';
 import Geocode from "react-geocode";
 import Map from '../maps/Map';
 
@@ -107,6 +107,11 @@ const CreateEventContent = ({ options, onMount, className }) => {
     const addLocationHandler = async() => {
         let data = await addLocation(location_name, address[0].location_address, address[0].location_city, address[0].location_state, address[0].location_zip, lat, lng);
         console.log(data);
+        if(data.status === "ERRORED") {
+            alert('Failed to create event. There is already an event in this location and time');
+            cleanEvent();
+            return
+        }
         // TODO: navigate the just created event page
     }
 
@@ -115,10 +120,12 @@ const CreateEventContent = ({ options, onMount, className }) => {
     }
 
     const dateHandler = date=>{
+        console.log(date);
         setDate(date);
     }
 
     const timeHandler = time=>{
+        console.log(time);
         setTime(time);
     }
 

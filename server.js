@@ -616,6 +616,19 @@ app.get('/api/members', async (req, res) => {
   }
 });
 
+app.get('/api/cleanevent', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    var query_str = "CALL UniversityEvents.cleanevent()";
+    var [results] =  await conn.query(query_str);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
 app.get('/api/approve_events', async (req, res) => {
   try {
     var conn = pool.promise();

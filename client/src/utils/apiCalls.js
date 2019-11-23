@@ -547,3 +547,19 @@ export const manageEvents = async (approved,event_id) => {
         console.log(e);
     }
 }
+
+export const cleanEvent = async () => {
+    try {
+        let response = await fetch(`/api/cleanevent`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const body = await response.json();
+        return body;
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
