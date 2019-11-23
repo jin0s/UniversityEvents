@@ -19,7 +19,10 @@ const RSO = (props) => {
                     <CardSubtitle className='cardTitle' tag="h2"> 
                         {props.name}
                     </CardSubtitle>
-                    <Button className='button' onClick={()=>joinRSOHandler(props.id)} >Join</Button>
+                    <div style={{display: 'flex', flexDirection: 'row', paddingLeft: '270px'}}>
+                        <Button className='button' onClick={()=>joinRSOHandler(props.id)} >Join</Button>
+                        <Button className='button'>Leave</Button>
+                    </div>
                 </CardBody>             
             </Card>
         </div>
