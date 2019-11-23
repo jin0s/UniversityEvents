@@ -112,7 +112,7 @@ const CreateEventContent = ({ options, onMount, className }) => {
             cleanEvent();
             return
         }
-        // TODO: navigate the just created event page
+        window.location.reload();
     }
 
     const nameHandler = name=>{
