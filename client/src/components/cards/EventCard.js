@@ -85,22 +85,27 @@ const EventCard = (props) => {
                         {props.description}
                     </CardText>
                     <small className="float-right text-muted">{props.datetime}</small>
-            
+                    <br/>
+                    
                     <ToggleContent
                         toggle={show => <IconButton onClick={show}><CommentButton/></IconButton>}
                         content={hide => (
                             <div>
+                                <hr />
                                 {
                                     comments.map((value) => {
                                             return (
-                                                <Comment    key={value.id} 
-                                                            id={value.id} 
-                                                            name={value.user_id}
-                                                            rating={value.rating}
-                                                            time_created={value.timestamp}
-                                                            username={value.user_id}  
-                                                            content={value.description}
-                                                />
+                                                <div>
+                                                    <Comment    key={value.id} 
+                                                                id={value.id} 
+                                                                name={value.user_id}
+                                                                rating={value.rating}
+                                                                time_created={value.timestamp}
+                                                                username={value.user_id}  
+                                                                content={value.description}
+                                                    />
+                                                    <hr />
+                                                </div>
                                         );
                                     })
                                 }
@@ -117,11 +122,12 @@ const EventCard = (props) => {
                             value={commentBeingAdded}
                             onChange= { e => commentBeingAddedHandler(e.target.value)}
                         /> 
-                        <div className='rating' >
+                        
                             <Ratings
                                 rating={rating}
                                 widgetRatedColors="blue"
                                 changeRating= {ratingHandler}
+                                style={{display: 'flex', 'flexDirection': 'inline', width: '100%'}}
                             >
                                 <Ratings.Widget />
                                 <Ratings.Widget />
@@ -129,7 +135,7 @@ const EventCard = (props) => {
                                 <Ratings.Widget />
                                 <Ratings.Widget />
                             </Ratings>
-                        </div>
+                        <br/>
                         <Button className='button' variant="primary" size="small" onClick={addCommentHandler}>
                             Comment
                         </Button>

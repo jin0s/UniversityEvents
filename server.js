@@ -690,6 +690,20 @@ app.post('/api/leave_rso', async (req, res) => {
   }
 });
 
+app.get('/api/get_rso_status', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const values = [req.query.rso_id];
+    var query_str = "SELECT status from UniversityEvents.RSOs WHERE id = ?";
+    var [results] =  await conn.query(query_str, values);
+    return res.json(results);
+  } 
+  catch (e) {
+    console.log(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
 
 /***************************** END OF ROUTING ********************************/
 

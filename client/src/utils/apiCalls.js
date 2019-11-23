@@ -584,3 +584,20 @@ export const leaveRSO = async (user_id,rso_id) => {
         console.log(e);
     }
 }
+
+
+export const getRSOStatus = async (rso_id) => {
+    try {
+        let response = await fetch(`/api/get_rso_status?rso_id=${rso_id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const body = await response.json();
+        return body;       
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
