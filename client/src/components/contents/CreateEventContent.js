@@ -187,13 +187,13 @@ const CreateEventContent = ({ options, onMount, className }) => {
                 <li>
                     <label>
                         Date: 
-                        <input type='text' onBlur = { e => dateHandler(e.target.value)}/>
+                        <input type='date' onBlur = { e => dateHandler(e.target.value)}/>
                     </label>
                 </li>
                 <li>
                     <label>
                         Time:
-                        <input type='text' onBlur = { e => timeHandler(e.target.value)}/>
+                        <input type='time' onBlur = { e => timeHandler(e.target.value)}/>
                     </label>
                 </li>
                 <li>
