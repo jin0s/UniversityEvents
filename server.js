@@ -673,6 +673,24 @@ app.post('/api/manage_events', async (req, res) => {
   }
 });
 
+// Leave RSO
+app.post('/api/leave_rso', async (req, res) => {
+  try {
+    var conn = pool.promise();
+    const values = [req.body.user_id, req.body.rso_id] 
+    console.log("incomeing values " + values);
+    var query_str = 
+      "DELETE FROM UniversityEvents.Member WHERE user_id = ? AND RSO_id = ? ";
+    var [results] =  await conn.query(query_str, values);
+    return res.json({status: 0});
+  } 
+  catch (e) {
+    console.error(e);
+    return res.json({status: 'ERRORED'});
+  }
+});
+
+
 /***************************** END OF ROUTING ********************************/
 
 

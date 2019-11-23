@@ -563,3 +563,24 @@ export const cleanEvent = async () => {
         console.log(e);
     }
 }
+
+
+export const leaveRSO = async (user_id,rso_id) => {
+    try {
+        let response = await fetch('/api/leave_rso', {
+            method: 'POST',
+            body: JSON.stringify({
+                "user_id" : user_id,
+                "rso_id" : rso_id
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const body = await response.json();
+        return body;       
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
