@@ -102,7 +102,8 @@ const CreateRSOContent = (props) => {
             let getAdminData = await getAdminById(username);
             window.location.reload();
         } else {
-            alert("Error creating rso");
+            alert("Error creating rso: The admin is already an admin at another school");
+            return;
         }
     }
 
