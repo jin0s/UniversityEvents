@@ -43,7 +43,7 @@ class App extends Component {
       }
       this.props.history.push("/home");
     } else {
-      alert("Incorrect Password!");
+      alert("Incorrect Username Or Password!");
     }
     let universityData = await getUniversityIdByUserId(username);
     if (universityData.length !== 0) {

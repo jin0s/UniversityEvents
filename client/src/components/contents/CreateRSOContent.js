@@ -1,7 +1,7 @@
 import React, { useContext, useState, Component } from 'react';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import { getUserById, create_admins, create_rso } from '../../utils/apiCalls';
+import { getUserById, create_admins, create_rso, getSuperAdminById, getAdminById } from '../../utils/apiCalls';
 import './CreateRSOContent.css';
 
 const CreateRSOContent = (props) => {
@@ -17,6 +17,8 @@ const CreateRSOContent = (props) => {
     const[listOpen, setListOpen] = useState(false);
 
     const university_id = localStorage.getItem('university_id');
+    const username = localStorage.getItem('user_id');
+
 
     const setAdminHandler = admin=>{
         setAdmin(admin);
@@ -90,13 +92,17 @@ const CreateRSOContent = (props) => {
         console.log("RSO name " + name);
         console.log("university_id " + university_id);
 
-        let createRSOData = await create_rso(admin, selectedMembers1, selectedMembers2, 
+        let [createRSOData] = await create_rso(admin, selectedMembers1, selectedMembers2, 
             selectedMembers3, selectedMembers4, name, university_id);
-
+        console.log(createRSOData);
         if (createRSOData.status === 0) {
             console.log("Create RSO was successful");
+            alert("Create RSO was successful");
+            let getSuperAdminData = await getSuperAdminById(username);
+            let getAdminData = await getAdminById(username);
+            window.location.reload();
         } else {
-            // alert("Error creating rso");
+            alert("Error creating rso");
         }
     }
 

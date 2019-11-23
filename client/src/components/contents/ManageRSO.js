@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import {getRSOListForAdmin, getMemberByRSOID, changeAdmin} from '../../utils/apiCalls';
+import {getRSOListForAdmin, getMemberByRSOID, changeAdmin, getAdminById} from '../../utils/apiCalls';
 import EventCard from '../cards/EventCard';
 
 const ManageRSO = (props) => {
@@ -22,6 +22,7 @@ const ManageRSO = (props) => {
   }
 
   const setRSOHandler = async(data) => {
+    setRSO(data);
     getMembers(data);
   }
 
@@ -37,14 +38,24 @@ const ManageRSO = (props) => {
     }
 
     const changeAdminHandler = async() => {
-        let data = await changeAdmin(user, username);
+        if(rso === undefined || rso === "") {
+          alert("You must select a user to transfer admin rights");
+          return;
+        } else if(user === undefined || username === undefined || user === "" || username === "" ) {
+          alert("You must select a user to transfer admin rights");
+          return;
+        }
+        let data = await changeAdmin(user, username, rso);
         console.log(data);
         if(data.status === "ERRORED") {
-          alert("That user is already any admin, we cannot him an admin");
+          alert("That user is already an admin, we cannot him an admin");
           window.location.reload();
         } else {
-          localStorage.removeItem('super_admin_id');
-          localStorage.removeItem('admin');
+          let getAdminData = await getAdminById(username);
+          console.log(getAdminData);
+          if (getAdminData.length === 0) {
+            localStorage.removeItem("admin");
+          }
           window.location.reload();
         }
           
@@ -60,9 +71,11 @@ const ManageRSO = (props) => {
     return (
         <div className='Events'>CHANGE ADMINISTRATOR                 
             <select value={rso} onChange={ e=> setRSOHandler(e.target.value)}> 
+                <option value=""></option>
                 {rsoOption.map((value) => <option key={value.id} value={value.id}>{value.name}</option>)}
             </select>
-            <select value={user} onBlur={ e=> setUserHandler(e.target.value)}>
+            <select value={user} onChange={ e=> setUserHandler(e.target.value)}>
+              <option value=""></option>
                 {userOption.map((value) => <option key={value.user_id} value={value.user_id}>{value.user_id}</option>)}
             </select>
             <button className="submit" onClick={()=>changeAdminHandler()}> SUBMIT </button>

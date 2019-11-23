@@ -372,10 +372,10 @@ app.post('/api/create_admins', async (req, res) => {
 app.post('/api/change_admins', async (req, res) => {
   try {
     var conn = pool.promise();
-    const values = [req.body.user_id, req.body.admin_id] 
-    console.log("incomeing values " + req.body.user_id + " " + req.body.admin_id);
+    const values = [req.body.user_id, req.body.admin_id, req.body.rso] 
+    console.log("incomeing values ", req.body.user_id, req.body.admin_id, req.body.rso);
     var query_str = 
-      "UPDATE UniversityEvents.Admins SET user_id = ? WHERE user_id = ? ";
+      "CALL UniversityEvents.changeadmins(?, ?, ?) ";
     var [results] =  await conn.query(query_str, values);
     return res.json({status: 0});
   } 

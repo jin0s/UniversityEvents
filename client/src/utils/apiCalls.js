@@ -113,7 +113,7 @@ export const getAdminById = async (user_id) => {
             }
         })
         return response.text().then(function (text) {
-            console.log("getSuperAdminById response", text);
+            console.log("getAdminById response", text);
             return text ? JSON.parse(text) : {}
         })
     }
@@ -491,13 +491,14 @@ export const getMemberByRSOID = async (id, user_id) => {
 }
 
 
-export const changeAdmin = async (user_id,admin_id) => {
+export const changeAdmin = async (user_id,admin_id, rso) => {
     try {
         let response = await fetch('/api/change_admins', {
             method: 'POST',
             body: JSON.stringify({
                 "user_id" : user_id,
-                "admin_id" : admin_id
+                "admin_id" : admin_id,
+                "rso" : rso
             }),
             headers: {
                 'Content-Type': 'application/json'

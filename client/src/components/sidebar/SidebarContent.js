@@ -48,7 +48,7 @@ const SidebarContent = () => {
         {/* Admin  can  create  events */}
         <li onClick={ e => setButtonClicked('createEvent')}><span>CREATE AN EVENT</span></li>
         {/* Admin  change admins */}
-        <li onClick={ e => setButtonClicked('manageRSO')}><span>MANAGE RSOs</span></li>
+        <li onClick={ e => setButtonClicked('manageRSO')}><span>CHANGE RSOs ADMIN</span></li>
       </ul>
     </div>
   } else if (userLevel === "Student") {
