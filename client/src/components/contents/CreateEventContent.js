@@ -115,10 +115,12 @@ const CreateEventContent = ({ options, onMount, className }) => {
     }
 
     const dateHandler = date=>{
+        console.log(date);
         setDate(date);
     }
 
     const timeHandler = time=>{
+        console.log(time);
         setTime(time);
     }
 

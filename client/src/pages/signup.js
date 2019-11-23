@@ -48,11 +48,16 @@ export default props => {
         } else if (password.length < 4){
             alert("Your passwords must be atleast 4 characters long");
             return;
-        } else if (university === undefined || university === "") {
+        } else if(  (selectedUserLevel !== 'super_admin') 
+                    && (university === undefined || university === "")) {
             alert("Please select a university");
             return;
-        }
+        }   
         let data = await signUp(username,password,name);
+        if(data.status === "ERRORED") {
+            alert("That user name is already taken!");
+            return;
+        }
         let universityData = await getUniversityIdByName(university);
         if (selectedUserLevel === 'super_admin') {
             let super_admin_data = await assign_super_admins(username);
@@ -60,6 +65,7 @@ export default props => {
                 alert("That user account is already taken!");
             }
         } else {
+            
             studentOfHandler(username, universityData[0].id)
         }
         if(data.status === 0 && universityData.length !== 0){
