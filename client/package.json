@@ -3,9 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-scripts": "1.0.17"
+    "@material-ui/icons": "^4.5.1",
+    "google-maps-api-loader": "^1.1.1",
+    "google-maps-react": "^2.0.2",
+    "moment": "^2.24.0",
+    "rc-calendar": "^9.15.8",
+    "rc-time-picker": "^4.0.0-alpha.2",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-geocode": "^0.2.1",
+    "react-google-autocomplete": "^1.1.2",
+    "react-google-location": "^1.2.2",
+    "react-google-maps": "^9.4.5",
+    "react-icons": "^3.8.0",
+    "react-ratings-declarative": "^3.4.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "1.0.17",
+    "reactstrap": "^8.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

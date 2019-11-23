@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+    height: 100%;
+}
+.AppHome {
+    display: flex;
+    height: 100%;
+}
+
+/* .mainContent {
+    margin-top: 64;
+} */
+
+html {
+    height: 100%;
+}
+
