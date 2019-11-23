@@ -135,7 +135,7 @@ export default props => {
                 <div id="name_signUp">
                     <label>Name: </label>
                     <div>
-                        <input class="effect-1" type="text" onBlur= { e => nameHandler(e.target.value)}/>
+                        <input className="effect-1" type="text" onBlur= { e => nameHandler(e.target.value)}/>
                     </div>
                 </div>
                 <div id="username_signUp" style={{paddingTop: '15px'}}>

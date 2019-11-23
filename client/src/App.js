@@ -27,6 +27,7 @@ class App extends Component {
   loginHandler = async(event) => {
     event.preventDefault();
     const {username,inputPassword} = this.state;
+    console.log("password: " + inputPassword)
     let data = await login(username,inputPassword);
     if (data.status === 0) {
       console.log("Login was successful");
