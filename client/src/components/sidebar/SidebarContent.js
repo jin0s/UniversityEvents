@@ -59,7 +59,7 @@ const SidebarContent = () => {
         {/* Students can view events by location*/}
         <li onClick={ e => setButtonClicked('discoverEventsByLocation')}><span>DISCOVER EVENTS BY LOCATION</span></li>
         {/* Students can join an existing RSO */}
-        <li onClick={ e => setButtonClicked('joinRSO')}><span>JOIN AN RSO</span></li>
+        <li onClick={ e => setButtonClicked('joinRSO')}><span>JOIN/LEAVE AN RSO</span></li>
         {/* A student  user  can  request  to  create a  new  RSO  */}
         <li onClick={ e => setButtonClicked('startRSO')}><span>START AN RSO</span></li>
       </ul>

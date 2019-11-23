@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardText, CardBody,CardTitle, CardSubtitle, Button } from 'reactstrap';
-import { join_rso } from '../../utils/apiCalls';
+import { join_rso, leaveRSO } from '../../utils/apiCalls';
 import './Card.css';
 
 const RSO = (props) => {
@@ -12,6 +12,12 @@ const RSO = (props) => {
         console.log('Join RSO response: ', result);
     }
 
+    const leaveRSOHandler = async(rso_id) => {
+        let result =  await leaveRSO(user_id, rso_id);
+        console.log('Leave RSO response: ', result);
+    }
+
+
     return (
         <div className='cardContainer' key={props.id} id={props.id}>
             <Card className='card' elevation={4}>
@@ -21,7 +27,7 @@ const RSO = (props) => {
                     </CardSubtitle>
                     <div style={{display: 'flex', flexDirection: 'row', paddingLeft: '270px'}}>
                         <Button className='button' onClick={()=>joinRSOHandler(props.id)} >Join</Button>
-                        <Button className='button'>Leave</Button>
+                        <Button className='button' onClick={()=>leaveRSOHandler(props.id)}>Leave</Button>
                     </div>
                 </CardBody>             
             </Card>
