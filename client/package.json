@@ -6,7 +6,7 @@
     "@material-ui/icons": "^4.5.1",
     "google-maps-api-loader": "^1.1.1",
     "google-maps-react": "^2.0.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "rc-calendar": "^9.15.8",
     "rc-time-picker": "^4.0.0-alpha.2",
     "react": "^16.11.0",
